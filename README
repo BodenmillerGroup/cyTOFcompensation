@@ -1,0 +1,73 @@
+# cyTOF compensation
+
+This repository contains scripts used to reproduce a majority of figures from the paper "Compensation of signal spillover in suspension and imaging mass cytometry" by Stéphane Chevrier*, Helena Crowell*, Vito R.T. Zanotelli*, Stefanie Engler, Mark D. Robinson, and Bernd Bodenmiller
+submitted to Cell Systems.
+
+The bioRxiv version was made available under the name "Channel crosstalk correction in suspension and imaging mass cytometry": https://www.biorxiv.org/content/early/2017/09/07/185744
+
+The raw data is available from Mendeley data under the DOI code 10.17632/v58yj49pfr
+The CATALYST package developped specifically to allow a user friendly usage of the developped spillover estimation and compensation approach can be found for download at: http://bioconductor.org/packages/CATALYST
+A link to the light version of the web app, installation instructions, example datasets, and vignettes for CATALYST are available from the project page: https://catalyst-project.github.io/. 
+
+
+
+
+
+The repository is organized in the following scripts:
+
+0) TODO retrieve_data.nb.Rmd:
+Retrieves the data from the Mendeley repository.
+If you want to run the scripts below this needs to be run first.
+
+## Flow mass cytometry compensation
+1) TODO dilution_series.nb.Rmd:
+
+Assesses the linearity of spillover based on a dilution series of antibody staining
+This will reproduce, among other plots, the following figures from the paper:
+* Figure 1, C
+
+
+2) correlation_analysis.nb.Rmd:
+Explore how spillover and compensation affect correlations and phenograph clusters in a cyTOF dataset.
+This will reproduce, among other plots, the following figures from the paper:
+* Figure 3, A-E
+* Figure S4, A-C
+TODO: adapt all paths
+
+
+
+## Imaging mass cytometry compensation:
+3) imc_generatespillmat_long.nb.Rmd:
+A detailed step by step script to calculate a spillover matrix from a single stain experiment.
+Reproduces:
+* Figure S5, A
+* Figure 4, A
+
+4) TODO imc_generatespillmat_short.nb.Rmd:
+A short version of a script to generate a spillover matrix from an IMC single stain experiment in one step.
+
+
+5) imc_preprocessing.ipynb:
+A script to convert & process IMC images for segmentation. Adapted from: https://github.com/BodenmillerGroup/ImcSegmentationPipeline
+The belonging CellProfiller & ilastik pipelines can be found in the data/IMC_image/pipelines
+To run this needs also script 6).
+The segmentation output produced is used in script 7) and the images saved were used in ImageJ to reproduce Fig 4 B
+
+6) imc_adaptsm.nb.Rmd:
+Adapts the spillover matrix and saves it as a TIFF for usage in the CellProfiller pipeline.
+
+
+7) imc_cpoutput_analysis.nb.Rmd:
+Script that was used to compensate the CellProfiller output and display the segmented data on the masks.
+Reproduces:
+* Fig 3. D
+and produces the mask images visualized in Fig 4 C using ImageJ
+
+
+
+Bonus scripts:
+- TODO imc_compensate_txt.nb.Rmd:
+  A supplemenatry script that shows how to directly compensate an IMC .txt raw data file and save it as a .txt
+  This was requested in the imc-forum: https://www.imc-forum.org/viewtopic.php?f=4&p=30#p13
+  
+  

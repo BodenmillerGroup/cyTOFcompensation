@@ -1,0 +1,34 @@
+---
+title: "Image Compensation"
+output: html_notebook
+---
+
+Adapts the spillover matrix
+# Compensate an IMC image
+```{r Libraries}
+library(CATALYST)
+```
+
+
+##
+```{r Setup}
+fn_sm = '../data/Figure_S5/2018-02-06_v1_Spillover_Matrix_2_sm.csv'
+fn_imc_metals = '../data/Figure_4/IMC_image/analysis/imc_example_image_a0_full.csv'
+fol_out = dirname(fn_imc_metals)
+prefix_out =  'adapted_'
+```
+
+
+Write the spillover matrix for cellprofier
+
+```{r}
+sm = read.csv(fn_sm, row.names = 1)
+analysis_channels = read.csv(fn_imc_metals,header = F)
+analysis_channels = paste(as.character(analysis_channels$V1), 'Di', sep = '')
+sm_table = CATALYST::adaptSpillmat(input_sm = as.matrix(sm), out_chs = analysis_channels)
+```
+
+```{r}
+tiff::writeTIFF(sm_table, file.path(fol_out, 'imc_full_sm.tiff'), bits.per.sample = 32, reduce = T)
+```
+

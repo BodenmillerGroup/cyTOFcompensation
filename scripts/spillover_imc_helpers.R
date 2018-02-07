@@ -1,0 +1,154 @@
+library(CATALYST)
+library(data.table)
+library(flowCore)
+library(dplyr)
+library(dtplyr)
+library(stringi)
+
+col2img <- function(dat, valcol, xcol='X', ycol='Y'){
+  xmax = dat[, max(get(xcol))]
+  ymax = dat[, max(get(ycol))]
+  # sometimes the last row is incomplete, thus only take the data until the second last row in this case
+  if (xmax < dat[, get(xcol)[.N]]){
+    ymax = ymax-1
+  }
+  xmax = xmax+1
+  ymax = ymax+1
+  
+  img = matrix(data=dat[1:(xmax*ymax), get(valcol)], nrow = xmax, ncol = ymax)
+  return(img)
+}
+
+img2dat <- function(imgdat){
+  imgdat = copy(imgdat)
+  dat =imgdat
+  
+  colnames(dat) = sapply(colnames(dat), function(x) gsub('.*\\(', '',x))
+  colnames(dat) = sapply(colnames(dat), function(x) gsub('\\)', '',x))  
+  return(dat)
+}
+
+
+### Helpers to load single stain .txt files
+load_ss_fol <- function(fol_ss){
+  # helper function to load all .txt files from a folder
+  fns_txt <- list.files(fol_ss,pattern = '*.[0-9]+.txt$') 
+  imgs.ss <- lapply(fns_txt, function(x){
+    fread(file.path(fol_ss, x))})
+  names(imgs.ss) <- fns_txt
+  return(imgs.ss)
+}
+
+
+load_ss_zip <- function(fol_ss){
+  # helper function that can load .txt files form a .zip file archive
+  fns_inzip <- unzip(fol_ss, list=T) %>%
+    do(as.data.frame(.$Name[ endsWith(.$Name, '.txt')]))
+  
+  fns_inzip = fns_inzip[,1]
+  imgs.ss = lapply(fns_inzip, function(x){
+    fread(paste0('unzip -qp ', fol_ss, ' ', gsub(" ", '\\\\ ', x)))
+  })
+  
+  names(imgs.ss) <- fns_inzip
+  return(imgs.ss)
+}
+
+
+### 
+fixnames <- function(imgdat){
+  # Extracts the correct metal names from the .txt files
+  imgdat = copy(imgdat)
+  dat =imgdat
+  
+  colnames(dat) = sapply(colnames(dat), function(x) gsub('.*\\(', '',x))
+  colnames(dat) = sapply(colnames(dat), function(x) gsub('\\)', '',x))  
+  return(dat)
+}
+
+imglist2dat <- function(datlist){
+  #  creates a data file from the list of files
+  imgdat <- rbindlist(datlist, fill=T, idcol = 'file')
+  return(imgdat)
+}
+
+## Helper to summarize
+
+calc_file_medians <- function(dat){
+  # calculates medians per file
+  tdat = dat %>%  
+    dplyr::select(-c(Start_push, End_push, Pushes_duration,   X , Y  ,  Z)) %>%
+    melt.data.table(id.vars = c('metal', 'mass','file')) %>%
+    do(data.table(.)[, list(med=median(value)), by=.(variable, metal, mass, file)]) 
+  return(tdat)
+  
+}
+
+
+## Helpers to aggregate consecutive pixels
+get_consecutive_bin <- function(nel, nbin){
+  # gets consecutive pixels
+  idx = rep(1:ceiling(nel/nbin), each=nbin)
+  return(idx[1:nel])
+}
+
+aggregate_pixels <- function(dat, n){
+  # sums over n consecutive pixels
+  tdat = dat[, rowsum(.SD, get_consecutive_bin(.N, n)) ,by=.(file, mass, metal)]
+  return(tdat)
+}
+
+
+## Do compensation
+
+filter_rare_bc <- function(re, minevents){
+  # allows filtering out of rare events
+  stats = table(re@bc_ids)
+  nonfreq = names(stats)[stats <minevents]
+  re@bc_ids[re@bc_ids %in% nonfreq] = '0'
+  return(re)
+  
+}
+
+ensure_correct_bc <- function(re, mass){
+  # enforces correct barcodes according to mass/metal identified from the file name
+  re@bc_ids[re@bc_ids != as.character(mass)] = '0'
+  return(re)
+}
+
+
+re_from_dat <- function(dat, ss_ms, minevents=10, correct_bc=NULL){
+  # Debarcode the data, enforce some minimal quality
+  # dat: data
+  # bc_ms: list of masses used for the single stains
+  # minevents: minimum number of events a metal needs to have to be considered
+  # correct_bc: list of ground truth barcodes, e.g. from the filenames
+  ff = dat %>%
+    dplyr::select(-c(file, mass, metal)) %>%
+    as.matrix.data.frame() %>%
+    flowFrame()
+  
+  
+  re <- CATALYST::assignPrelim(x=ff,y= ss_ms)
+  re <- estCutoffs(re)
+  re <- applyCutoffs(re)
+  
+  # filter for conditions with less then minevents
+  if (!is.null(correct_bc)){
+    re = ensure_correct_bc(re, dat[, mass])
+  }
+  
+  re = filter_rare_bc(re, minevents)
+  return(re)
+}
+
+
+sm_from_dat <- function(dat, ss_ms, minevents=10, remove_incorrect_bc=T, ...){
+  # Helper function to debarcode and calculate spillover
+  # ss_ms: masses used for single stains
+  # minevents: minimal number of events to consider spillover estimation
+  # remove_incorrect_bc; enforce correct barcode by using
+  re <- re_from_dat(dat, ss_ms, minevents,remove_incorrect_bc)
+  sm <- computeSpillmat(re, ...)
+  return(sm)
+}
