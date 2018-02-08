@@ -1,5 +1,6 @@
 ---
 title: ".txt file image compensation"
+author: 'Vito Zanotelli et al.'
 output:
   html_document:
     df_print: paged
@@ -84,4 +85,8 @@ col2img(img_comp, '(Er167Di)')  %>%
 fwrite is a fast way to write .txt files
 ```{r}
 fwrite(img_comp, file=file.path(fol_out, fn_out),sep='\t')
+```
+
+```{r}
+sessionInfo()
 ```

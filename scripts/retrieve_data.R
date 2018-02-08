@@ -1,6 +1,7 @@
 ### Download of the raw data from mendeley data
 # 'source' the file to download and unzip all the raw data into the correct data subfolder
 # This will only work once the Mendeley data is published
+# author: Vito Zanotelli et al.
 
 #urls_data = c(
 #              'https://data.mendeley.com/datasets/v58yj49pfr/draft/files/1b30781a-7509-4c0a-9ff7-0e8d980ae3b9/Figure_1.zip?dl=1',

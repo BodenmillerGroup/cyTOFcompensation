@@ -1,5 +1,6 @@
 ---
 title: "Spillover linearity"
+author: Stephane Chevrier & Vito Zanotelli, et al.
 output:
   html_document:
     df_print: paged

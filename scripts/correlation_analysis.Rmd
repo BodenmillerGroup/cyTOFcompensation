@@ -1,6 +1,7 @@
 ---
 html_document: default
-title: "R Notebook"
+title: "Correlation analysis"
+author: Vito Zanotelli, et al.
 html_notebook: default
 output:
   html_document:

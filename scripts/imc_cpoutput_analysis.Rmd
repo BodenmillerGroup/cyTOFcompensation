@@ -1,6 +1,6 @@
 ---
 title: "Analysis and compensation of CellProfiller output"
-author: "Vitoz"
+author: 'Vito Zanotelli et al.'
 date: "01/12/2016"
 output:
 html_notebook: default

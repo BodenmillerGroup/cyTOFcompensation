@@ -4,6 +4,7 @@ library(flowCore)
 library(dplyr)
 library(dtplyr)
 library(stringi)
+# author: Vito Zanotelli et al.
 
 col2img <- function(dat, valcol, xcol='X', ycol='Y'){
   xmax = dat[, max(get(xcol))]

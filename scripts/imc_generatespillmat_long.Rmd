@@ -1,5 +1,6 @@
 ---
 title: "Spillover estimation IMC"
+author: 'Vito Zanotelli et al.'
 output:
   html_document:
     df_print: paged

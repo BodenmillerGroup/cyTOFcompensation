@@ -1,5 +1,6 @@
 ---
 title: "Image Compensation"
+author: 'Vito Zanotelli et al.'
 output:
   html_document:
     df_print: paged
@@ -34,3 +35,6 @@ sm_table = CATALYST::adaptSpillmat(input_sm = as.matrix(sm), out_chs = analysis_
 tiff::writeTIFF(sm_table, file.path(fol_out, 'imc_full_sm.tiff'), bits.per.sample = 32, reduce = T)
 ```
 
+```{r}
+sessionInfo()
+```
