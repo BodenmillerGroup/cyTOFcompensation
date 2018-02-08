@@ -1,0 +1,87 @@
+---
+title: ".txt file image compensation"
+output:
+  html_document:
+    df_print: paged
+---
+# Aim
+This shows how to compensate a .txt file using CATALYST
+
+```{r}
+library(CATALYST)
+library(data.table)
+library(ggplot2)
+library(flowCore)
+library(dplyr)
+library(dtplyr)
+library(EBImage)
+library(fields)
+library(viridis)
+source('./spillover_imc_helpers.R')
+```
+## Set paths
+```{r}
+fn_sm = '../data/Figure_S5/paper_version_Spillover_Matrix_2_sm.csv'
+fn_img = '../data/Figure_4/IMC_image/imc_example_image.txt'
+fol_out = '../data/'
+fn_out = 'imc_example_comp.txt'
+```
+
+## Read img
+Fread is the fastest .csv reader I am aware of.
+```{r}
+img = fread(fn_img,sep = '\t')
+```
+
+## visualize the img
+
+### helper fkt
+```{r}
+normimg <- function(x){
+  xmax = max(x)
+  x = x/xmax
+  x = EBImage::medianFilter(x, size=1)
+  x = x*xmax
+  return(x)
+}
+```
+
+
+### Visualization
+```{r}
+par(mfrow=c(1,2))
+
+
+col2img(img, 'CarbAnhyd(Er166Di)')  %>%
+  normimg() %>%
+  fields::image.plot(col=viridis(50))
+  
+col2img(img, '(Er167Di)')  %>%
+  normimg() %>%
+  fields::image.plot(col=viridis(50))
+```
+## Compensate the image
+
+```{r}
+sm = read.csv(fn_sm, row.names = 1)
+
+img_comp = comp_datimg(img, sm = sm)
+
+```
+### Visualization after compensation
+```{r}
+par(mfrow=c(1,2))
+col2img(img_comp, 'CarbAnhyd(Er166Di)')   %>%
+  normimg() %>%
+  fields::image.plot(col=viridis(50))
+  
+col2img(img_comp, '(Er167Di)')  %>%
+  normimg() %>%
+  fields::image.plot(col=viridis(50))
+```
+### Write the image file
+
+fwrite is a fast way to write .txt files
+```{r}
+fwrite(img_comp, file=file.path(fol_out, fn_out),sep='\t')
+```

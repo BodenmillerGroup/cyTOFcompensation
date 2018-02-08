@@ -1,0 +1,72 @@
+---
+title: "Spillover estimation IMC"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Aim
+This script shows how to estimate spillover from single metal spots on an agarose coated slide.
+This short script illustrates how the helper function 'estimate_sm_from_imc_txtfol' can be used to estimate a spillover matrix from a folder containing all acquisitions 
+in .txt format in one single function call.
+
+```{r Libraries, message=FALSE}
+library(CATALYST)
+library(data.table)
+library(ggplot2)
+library(flowCore)
+library(dplyr)
+library(dtplyr)
+library(stringr)
+library(ggpmisc)
+source('spillover_imc_helpers.R')
+```
+
+
+## setup the configuration variables
+```{r Setup}
+# list of folders that contain each a complete single stain acquisition (e.g. in case that one wants to run and compare multiple single stains from different days)
+fol_ss = '../data/Figure_S5/Spillover_Matrix_2'
+```
+Example for estimation of the spillover matrix from a folder of single stains
+with single stains parsed from naming: xxx_x_metal_x.txt? (E.g. Dy161 1-1000_8_Dy161_8.txt)
+```{r}
+#' estimate_sm_from_imc_txtfol
+#' Estimates spillover directly from a folder containing IMC .txt files
+#'
+#' @param fol_ss folder containing .txt acquisitions of IMC single stains
+#' @param ssmetals_from_fn logical, Are the single stains correctly named xxx_x_metal_x.txt? (E.g. Dy161 1-1000_8_Dy161_8.txt
+#' @param ssmetals Vector of masses of the single stains used. Required if ssmetals_from_file_fn is False
+#' @param fn2ssmetal Optional: a named vector mapping the filenames to the single stain metal used (e.g. if it cannot be parsed from the filename)
+#' @param remove_incorrect_bc Remove barcodes not matching the filename single stain annotation (requires either ssmetals_from_fn=T or fn2ssmetal )
+#' @param minevents Minimal number of events (after debarcoding) that need to be present in a single stain in order that a spillover estimation is performed
+#' @param bin_n_pixels Optional: integer, bin n consecutive pixels. Can be used if the intensities per pixel are to low (e.g. <200 counts)
+#' @param ... Optional parameters will be passed to CATALYST::computeSpillmat 
+res = estimate_sm_from_imc_txtfol(fol_ss, ssmetals_from_fn=T)
+```
+Plot of the spillover matrix estimated
+(1:10000 is just to circumvent the requirement of the plotSpillmat function to have single stain masses provided)
+```{r}
+CATALYST::plotSpillmat(1:10000,res[['sm']])
+```
+
+Quality control: Distribution of medians per file
+```{r fig.height=20, fig.width=20}
+plot_file_medians(res[['data']])
+```
+In case the spillover matrix should be written out
+```{r}
+#write.csv(res[['sm']],file = 'path/sm.csv')
+```
+
+
+Alternatively the function can also be called with a list of single stain masses, if the metals are not contained in the filename
+```{r}
+ssmass = c(161, 162, 163, 164, 166, 167, 168, 170, 151, 153, 155, 156, 158, 160, 165, 113, 115, 175, 142, 143, 144, 145, 146, 148, 150, 141, 147, 149, 152, 154, 159, 169, 171, 172, 173, 174, 176)
+res = estimate_sm_from_imc_txtfol(fol_ss, ssmetals_from_fn=F,ssmass = ssmass )
+```
+
+```{r}
+sessionInfo()
+```
+

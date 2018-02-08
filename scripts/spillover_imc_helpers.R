@@ -56,13 +56,18 @@ load_ss_zip <- function(fol_ss){
 
 
 ### 
+
+get_metals_from_txtname <- function(nam){
+  nam =  gsub('.*\\(', '', nam)
+  nam = gsub('\\)', '',nam)
+  return(nam)
+}
+
 fixnames <- function(imgdat){
   # Extracts the correct metal names from the .txt files
   imgdat = copy(imgdat)
   dat =imgdat
-  
-  colnames(dat) = sapply(colnames(dat), function(x) gsub('.*\\(', '',x))
-  colnames(dat) = sapply(colnames(dat), function(x) gsub('\\)', '',x))  
+  colnames(dat) = sapply(colnames(dat), function(x) get_metals_from_txtname(x))
   return(dat)
 }
 
@@ -152,3 +157,72 @@ sm_from_dat <- function(dat, ss_ms, minevents=10, remove_incorrect_bc=T, ...){
   sm <- computeSpillmat(re, ...)
   return(sm)
 }
+
+
+#' Estimates spillover directly from a folder containing IMC .txt files
+#'
+#' @param fol_ss folder containing .txt acquisitions of IMC single stains
+#' @param ssmetals_from_fn logical, Are the single stains correctly named xxx_x_metal_x.txt? (E.g. Dy161 1-1000_8_Dy161_8.txt
+#' @param ssmass Vector of masses of the single stains used. Required if ssmetals_from_file_fn is False
+#' @param fn2ssmetal Optional: a named vector mapping the filenames to the single stain metal used (e.g. if it cannot be parsed from the filename)
+#' @param remove_incorrect_bc Remove barcodes not matching the filename single stain annotation (requires either ssmetals_from_fn=T or fn2ssmetal )
+#' @param minevents Minimal number of events (after debarcoding) that need to be present in a single stain in order that a spillover estimation is performed
+#' @param bin_n_pixels Optional: integer, bin n consecutive pixels. Can be used if the intensities per pixel are to low (e.g. <200 counts)
+#' @param ... Optional parameters will be passed to CATALYST::computeSpillmat 
+#' @return a list containing the spillover matrix (sm), the data (data) and the debarcoded Catalyst object (re)
+estimate_sm_from_imc_txtfol <- function(fol_ss, ssmetals_from_fn=F, ssmass=NULL,fn2ssmetal=NULL,
+                                        remove_incorrect_bc=FALSE, minevents=10, bin_n_pixels=1, ...){
+  imgs_ss = load_ss_fol(fol_ss)
+  imgs_ss = lapply(imgs_ss, fixnames)
+  imgdat = imglist2dat(imgs_ss)
+  
+  if (ssmetals_from_fn){
+    imgdat[, metal:= strsplit(.BY[[1]], '_')[[1]][3],by=file]
+    imgdat[, mass:= as.numeric(str_extract_all(.BY[[1]], "[0-9]+")[[1]]),by=metal]
+  } else {
+    imgdat[, ':='(metal=NaN, mass=NaN)]
+  }
+  if (ssmetals_from_fn){
+    ssmass = imgdat[, unique(mass)]
+  } else if (is.null(ssmass)){
+    raise('If ssmetals cannot be derived from filenames, they need to be manually
+          provided using the "ssmetals" parameter!
+          ')
+  }
+  
+  if (bin_n_pixels > 1){
+    imgdat = aggregate_pixels(imgdat, bin_n_pixels)
+  }
+  re = re_from_dat(imgdat, ssmass, minevents, correct_bc=remove_incorrect_bc)
+  sm <- computeSpillmat(re, ...)
+  return(list('sm'=sm, 'data'=imgdat, 're'=re))
+  }
+
+plot_file_medians <- function(dat){
+  pdat = calc_file_medians(dat)
+  p  = pdat %>%
+    ggplot(aes(x=1, y=med))+
+    facet_wrap(~file+metal, scales = 'free_y')+
+    geom_label(aes(label=variable))
+  return(p)
+}
+
+#' Estimates spillover directly from a folder containing IMC .txt files
+#'
+#' @param a imc acquisition loaded as a data.table
+comp_datimg <- function(datimg, sm, method='nnls',...){
+  orig_names = colnames(img)
+  metal_names = sapply(orig_names, get_metals_from_txtname)
+  sm_ad = CATALYST::adaptSpillmat(input_sm = as.matrix(sm), metal_names)
+  
+  img_mat = as.matrix(datimg)
+  colnames(img_mat) <- metal_names
+  
+  img_comp = img_mat %>%
+    flowCore::flowFrame() %>%
+    CATALYST::compCytof(sm_ad,method=method, ...) %>%
+    flowCore::exprs() %>%
+    as.data.table()
+  setnames(img_comp, orig_names)
+  return(img_comp)
+} 

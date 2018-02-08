@@ -1,6 +1,8 @@
 ---
 title: "Image Compensation"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 Adapts the spillover matrix
@@ -12,7 +14,7 @@ library(CATALYST)
 
 ##
 ```{r Setup}
-fn_sm = '../data/Figure_S5/2018-02-06_v1_Spillover_Matrix_2_sm.csv'
+fn_sm = '../data/Figure_S5/paper_version_Spillover_Matrix_2_sm.csv'
 fn_imc_metals = '../data/Figure_4/IMC_image/analysis/imc_example_image_a0_full.csv'
 fol_out = dirname(fn_imc_metals)
 prefix_out =  'adapted_'

@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[11]:
+# In[ ]:
 
 from imctools.scripts import ometiff2analysis
 from imctools.scripts import imc2tiff
 
 
-# In[12]:
+# In[ ]:
 
 import os
 import re
@@ -20,9 +20,9 @@ import re
 # 
 # This needs the imctools library installed: https://github.com/BodenmillerGroup/imctools
 # 
-# The full description of the pipeline used can be found at: https://github.com/BodenmillerGroup/ImcSegmentationPipeline
+# The full description of the pipeline and how it needs to be setup can be found at: https://github.com/BodenmillerGroup/ImcSegmentationPipeline
 
-# In[13]:
+# In[ ]:
 
 # the folders with the txt/mcd files for the analysis
 folders = [
@@ -54,7 +54,7 @@ failed_images = list()
 
 # Specify which steps to run
 
-# In[14]:
+# In[ ]:
 
 do_convert_txt = True
 do_stacks = True
@@ -63,7 +63,7 @@ do_ilastik = True
 
 # Generate all the folders if necessary
 
-# In[15]:
+# In[ ]:
 
 for fol in [out_tiff_folder, analysis_folder, cp_folder]:
     if not os.path.exists(fol):
@@ -72,7 +72,7 @@ for fol in [out_tiff_folder, analysis_folder, cp_folder]:
 
 # Convert txt to ome
 
-# In[21]:
+# In[ ]:
 
 if do_convert_txt:
     for fol in (folders):
@@ -92,7 +92,7 @@ if do_convert_txt:
 
 # Generate the analysis stacks
 
-# In[19]:
+# In[ ]:
 
 if do_stacks:
     for img in os.listdir(out_tiff_folder):
@@ -105,7 +105,7 @@ if do_stacks:
 
 # Generate the ilastik stacks
 
-# In[20]:
+# In[ ]:
 
 if do_ilastik:
     for img in os.listdir(out_tiff_folder):
@@ -114,3 +114,10 @@ if do_ilastik:
                                             basename + suffix_ilastik, pannelcsv=pannel_csv, metalcolumn=metal_col,
                                             usedcolumn=ilastik_col, addsum=True, bigtiff=False,sort_channels=False)
 
+
+# The next steps needs a CellProfiller setup according to the description in  https://github.com/BodenmillerGroup/ImcSegmentationPipeline
+# It was tested with CellProfiller V2.x
+# - Run the pipeline './imc_pipelines_cellprofiller_prepare_ilastik.cpproj' in CellProfiller
+# - Run the pixel classification: 'ilastik_pixelclassification.ilp' in ilastik
+#     -> maybe the image path needs to be set to the image 'imc_example_image_a0_ilastik_s2.tiff'
+# - Run the pipeline 'cellprofiller_segmentandexport.cpproj' in CellProfiller

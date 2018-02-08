@@ -1,6 +1,8 @@
 ---
 title: "Spillover estimation IMC"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 # Aim
@@ -34,7 +36,7 @@ fols_ss = c('../data/Figure_S5/Spillover_Matrix_2','../data/Figure_S5/Spillover_
 # output folder
 fol_out = '../data/Figure_S5/'
 # name prefix for all output
-prefix = paste0(Sys.Date(), '_v1_')
+prefix ='paper_version_'
 ```
 
 
@@ -77,7 +79,7 @@ Plots the median of the data. It is recommended to have >200 counts for all the 
 This is also a good plot to check if the metal spots really contain the correct metal!
 ```{r fig.height=13, fig.width=20}
 dats_raw_sum %>%
-  ggplot(aes(x=mass, y=med, color=.id))+
+  ggplot(aes(x=1, y=med, color=.id))+
   facet_wrap(~file+metal, scales = 'free_y')+
   geom_label(aes(label=variable), size=4)
 ```
@@ -103,7 +105,7 @@ dats_agg_sum = rbindlist(lapply(dats_agg, calc_file_medians), idcol = T)
 The intensities increase according to the aggregation factor
 ```{r fig.width=17, fig.height=10}
 dats_agg_sum %>%
-  ggplot(aes(x=mass, y=med, color=.id))+
+  ggplot(aes(x=1, y=med, color=.id))+
   facet_wrap(~file+metal, scales = 'free_y')+
   geom_label(aes(label=variable))
 
@@ -111,10 +113,6 @@ dats_agg_sum %>%
 
 ## CATALYST based compensation
 
-### Definition of some helper functions
-```{r Define helper functions}
-
-```
 
 ## estimate the spillover
 To estimate the spillover, the (aggregated) pixel values are first debarcoded using CATALYST, treating them like single cells. This step acts as a quality filter to remove background/noisy/weak pixels as well as pixels with artefacts (e.g. specles with strong signal in many channels).
@@ -245,7 +243,7 @@ plot_binplot <- function(imgs, fn, x_var, y_var, perc=0.99, nbins=100, fkt=media
 Plot the spillover relationships
 ```{r}
 
-
+pltimgs=list_img_ss[[1]]
 fn = "Er166_27_Er166_28.txt"
 x_var = "Er166Di"
 y_var= "Er167Di"
@@ -257,10 +255,14 @@ print(p)
 fn ="Er166_27_Er166_28.txt"
 x_var = "Er166Di"
 y_var= "Er168Di"
-pltimgs=list_img_ss[[1]]
+
 p = plot_binplot(pltimgs, fn, x_var, y_var, perc=0.9, nbins=25, fkt = median)
 p= p+ggtitle('Fig4 A lower')
 print(p)
 
 ```
 -> This reproduces Fig 4A
+
+```{r}
+sessionInfo()
+```
