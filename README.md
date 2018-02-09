@@ -9,10 +9,6 @@ The raw data is available from Mendeley data under the DOI code 10.17632/v58yj49
 The CATALYST package developped specifically to allow a user friendly usage of the developped spillover estimation and compensation approach can be found for download at: http://bioconductor.org/packages/CATALYST
 A link to the light version of the web app, installation instructions, example datasets, and vignettes for CATALYST are available from the project page: https://catalyst-project.github.io/. 
 
-
-
-
-
 The repository is organized in the following scripts:
 
 0) retrieve_data.Rmd:
@@ -21,12 +17,11 @@ If you want to run the scripts below this needs to be run first.
 TODO: Adapt to the correct URL once the data is online
 
 ## Flow mass cytometry compensation
-1) dilution_series.Rmd:
 
+1) dilution_series.Rmd:
 Assesses the linearity of spillover based on a dilution series of antibody staining
 This will reproduce, among other plots, the following figures from the paper:
 * Figure 1, C
-
 
 2) correlation_analysis.Rmd:
 Explore how spillover and compensation affect correlations and phenograph clusters in a cyTOF dataset.
@@ -34,7 +29,19 @@ This will reproduce, among other plots, the following figures from the paper:
 * Figure 3, A-E
 * Figure S4, A-C
 
-## Imaging mass cytometry compensation:
+3) spillover_estimation.Rmd:
+Estimates and compares spillover matrices obtained from 11 single stained bead replicates, Fluidigm, and IMC.
+Reproduces:
+* Figure S3, B-E
+* Figure S5, B-E
+
+4) method_comparison.Rmd:
+Compares different methods for spillover estimation (single-cell vs. estimation based, and expected vs. all interactions).
+Reproduces:
+* Figure S2, B-F
+
+## Imaging mass cytometry compensation
+
 3) imc_generatespillmat_long.Rmd:
 A detailed step by step script to calculate a spillover matrix from a single stain experiment.
 Reproduces:
@@ -44,7 +51,6 @@ Reproduces:
 4) imc_generatespillmat_short.Rmd:
 A short version of a script to generate a spillover matrix from an IMC single stain experiment in one step using a convenience function
 
-
 5) imc_preprocessing.ipynb:
 A script to convert & process IMC images for segmentation. Adapted from: https://github.com/BodenmillerGroup/ImcSegmentationPipeline
 The belonging CellProfiller & ilastik pipelines can be found in the data/IMC_image/pipelines
@@ -53,7 +59,6 @@ The segmentation output produced is used in script 7) and the images saved were 
 
 6) imc_adaptsm.Rmd:
 Adapts the spillover matrix and saves it as a TIFF for usage in the CellProfiller pipeline.
-
 
 7) imc_cpoutput_analysis.Rmd:
 Script that was used to compensate the CellProfiller output and display the segmented data on the masks.
