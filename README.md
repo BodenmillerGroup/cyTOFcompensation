@@ -1,6 +1,6 @@
 # cyTOF compensation
 
-This repository contains scripts used to reproduce a majority of figures from the paper "Compensation of signal spillover in suspension and imaging mass cytometry" by Stéphane Chevrier*, Helena Crowell*, Vito R.T. Zanotelli*, Stefanie Engler, Mark D. Robinson, and Bernd Bodenmiller
+This repository contains scripts used to reproduce a majority of figures from the paper "Compensation of signal spillover in suspension and imaging mass cytometry" by Stéphane Chevrier\*, Helena L. Crowell\*, Vito R.T. Zanotelli\*, Stefanie Engler, Mark D. Robinson, and Bernd Bodenmiller
 submitted to Cell Systems.
 
 The bioRxiv version was made available under the name "Channel crosstalk correction in suspension and imaging mass cytometry": https://www.biorxiv.org/content/early/2017/09/07/185744
@@ -23,21 +23,23 @@ Assesses the linearity of spillover based on a dilution series of antibody stain
 This will reproduce, among other plots, the following figures from the paper:
 * Figure 1, C
 
-2) correlation_analysis.Rmd:
+2) even_odd.Rmd:
+Assessment of compensation accuracy for single stained beads vs. multiplexed cells. Reproduces:
+* Figure 2, C
+
+3) correlation_analysis.Rmd:
 Explore how spillover and compensation affect correlations and phenograph clusters in a cyTOF dataset.
 This will reproduce, among other plots, the following figures from the paper:
 * Figure 3, A-E
 * Figure S4, A-C
 
-3) spillover_estimation.Rmd:
-Estimates and compares spillover matrices obtained from 11 single stained bead replicates, Fluidigm, and IMC.
-Reproduces:
+4) spillmat_estimation&stability.Rmd:
+Comparison and stability analysis of spillover matrices obtained from 11 single stained bead replicates, 2 IMC measurements, and Fluidigm. Reproduces:
 * Figure S3, B-E
 * Figure S5, B-E
 
-4) method_comparison.Rmd:
-Compares different methods for spillover estimation (single-cell vs. estimation based, and expected vs. all interactions).
-Reproduces:
+5) method_comparison.Rmd:
+Compares different methods for spillover estimation. Reproduces:
 * Figure S2, B-F
 
 ## Imaging mass cytometry compensation
