@@ -42,6 +42,9 @@ Comparison and stability analysis of spillover matrices obtained from 11 single 
 Compares different methods for spillover estimation. Reproduces:
 * Figure S2, B-F
 
+6) plotting-wrappers.R:
+Contains helper functions to plot the results of the above scripts.
+
 ## Imaging mass cytometry compensation
 
 3) imc_generatespillmat_long.Rmd:
