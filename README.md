@@ -44,7 +44,7 @@ Comparison and stability analysis of spillover matrices obtained from 11 single 
 
 6) method_comparison.Rmd:
 Compares different methods for spillover estimation. Reproduces:
-* Figure S2, B-F
+* Figure S2, C-F
 
 7) plotting-wrappers.R:
 Contains helper functions to plot the results of the above scripts.
