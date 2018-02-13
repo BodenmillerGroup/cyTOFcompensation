@@ -27,22 +27,26 @@ This will reproduce, among other plots, the following figures from the paper:
 Assessment of compensation accuracy for single stained beads vs. multiplexed cells. Reproduces:
 * Figure 2, C
 
-3) correlation_analysis.Rmd:
+3) bc_titration.Rmd:
+Support for our hypothesis that the difference observed in spillover between single-stained beads and multiplexed-stained cells is due to saturation effects. Reproduces:
+* Figure 2, D+E 
+
+4) correlation_analysis.Rmd:
 Explore how spillover and compensation affect correlations and phenograph clusters in a cyTOF dataset.
 This will reproduce, among other plots, the following figures from the paper:
 * Figure 3, A-E
 * Figure S4, A-C
 
-4) spillmat_estimation&stability.Rmd:
+5) spillmat_estimation&stability.Rmd:
 Comparison and stability analysis of spillover matrices obtained from 11 single stained bead replicates, 2 IMC measurements, and Fluidigm. Reproduces:
 * Figure S3, B-E
 * Figure S5, B-E
 
-5) method_comparison.Rmd:
+6) method_comparison.Rmd:
 Compares different methods for spillover estimation. Reproduces:
 * Figure S2, B-F
 
-6) plotting-wrappers.R:
+7) plotting-wrappers.R:
 Contains helper functions to plot the results of the above scripts.
 
 ## Imaging mass cytometry compensation
@@ -60,7 +64,7 @@ A short version of a script to generate a spillover matrix from an IMC single st
 A script to convert & process IMC images for segmentation. Adapted from: https://github.com/BodenmillerGroup/ImcSegmentationPipeline
 The belonging CellProfiller & ilastik pipelines can be found in the data/IMC_image/pipelines
 To run this needs also script 6).
-The segmentation output produced is used in script 7) and the images saved were used in ImageJ to reproduce Fig 4 B
+The segmentation output produced is used in script 7) and the images saved were used in ImageJ to reproduce Figure 4, B
 
 6) imc_adaptsm.Rmd:
 Adapts the spillover matrix and saves it as a TIFF for usage in the CellProfiller pipeline.
@@ -68,7 +72,7 @@ Adapts the spillover matrix and saves it as a TIFF for usage in the CellProfille
 7) imc_cpoutput_analysis.Rmd:
 Script that was used to compensate the CellProfiller output and display the segmented data on the masks.
 Reproduces:
-* Fig 3. D
+* Figure 3, D
 and produces the mask images visualized in Fig 4 C using ImageJ
 
 8) spillover_imc_helpers.R:
