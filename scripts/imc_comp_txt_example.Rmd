@@ -4,6 +4,7 @@ author: 'Vito Zanotelli et al.'
 output:
   html_document:
     df_print: paged
+    keep_md: true
 ---
 # Aim
 This shows how to compensate a .txt file using CATALYST

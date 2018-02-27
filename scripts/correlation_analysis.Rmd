@@ -6,6 +6,7 @@ html_notebook: default
 output:
   html_document:
     df_print: paged
+    keep_md: true
 code_folding: hide
 ---
 

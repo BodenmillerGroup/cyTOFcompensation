@@ -214,14 +214,12 @@ plot_file_medians <- function(dat){
 comp_datimg <- function(datimg, sm, method='nnls',...){
   orig_names = colnames(img)
   metal_names = sapply(orig_names, get_metals_from_txtname)
-  sm_ad = CATALYST::adaptSpillmat(input_sm = as.matrix(sm), metal_names)
-  
   img_mat = as.matrix(datimg)
   colnames(img_mat) <- metal_names
   
   img_comp = img_mat %>%
     flowCore::flowFrame() %>%
-    CATALYST::compCytof(sm_ad,method=method, ...) %>%
+    CATALYST::compCytof(sm,method=method, ...) %>%
     flowCore::exprs() %>%
     as.data.table()
   setnames(img_comp, orig_names)
