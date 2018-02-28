@@ -1,0 +1,175 @@
+---
+title: "Comparison of spill estimation methods"
+author: "Helena L Crowell"
+output: html_document
+---
+
+# Aim
+
+This script investigates and compares different methods for spillover estimation and compensation:
+
+* single-cell vs. population based estimation
+* consideration of expected vs. all interactions
+* classic vs. NNLS compensation
+
+```{r warning=FALSE}
+# load required packages
+library(CATALYST)
+library(flowCore)
+library(ggplot2)
+library(gridExtra)
+library(matrixStats)
+library(reshape2)
+
+# source helpers
+source('plotting-wrappers.R')
+```
+
+### Population vs. single-cell based estimation
+
+```{r message=FALSE, warning=FALSE, fig.width=4}
+# read in single-stained breads 
+fcs_path <- '../data/Figure_S3/bead replicates/160805_beads.fcs'
+ff <- read.FCS(fcs_path)
+
+# assign preliminary IDs
+ss_ms <- c(139, 141:156, 158:176)
+res <- assignPrelim(ff, ss_ms, verbose=FALSE)
+
+# apply deconvolution parameters
+sep_cutoffs <- read.table('../data/Figure_S3/sep_cutoffs.txt', check.names=FALSE)
+cutoffs <- c(.4, sep_cutoffs$`160805`)
+res <- applyCutoffs(res, mhl_cutoff=20, cutoffs)
+
+# estimate spillover matrices & compensate
+sm_classic <- computeSpillmat(res, method="classic", trim=.01)
+sm_default <- computeSpillmat(res, method="default")
+sms <- list(sm_classic, sm_default)
+
+comped_classic <- compCytof(ff, sm_classic)
+comped_default <- compCytof(ff, sm_default)
+
+# get indices of channels expected to receive spillover
+chs <- colnames(ff)
+ms <- get_ms(chs)
+mets <- get_mets(chs)
+spill_cols <- CATALYST:::get_spill_cols(ms, mets)
+
+# helper to get medians
+get_meds <- function(ff) {
+    unlist(sapply(ss_ms, function(i) {
+        inds <- bc_ids(res) == i
+        cols <- spill_cols[[which(ms == i)]]
+        cols <- cols[ms[cols] %in% 138:176]
+        colMedians(as.matrix(exprs(ff[inds, cols])))
+    }))
+}
+meds_uncomped <- get_meds(ff)
+meds_comped_classic <- get_meds(comped_classic)
+meds_comped_default <- get_meds(comped_default)
+df <- data.frame(meds_uncomped, meds_comped_classic, meds_comped_default)
+colnames(df) <- c("Uncompensated", 
+    "Population based\nestimation", 
+    "Single-cell based\nestimation")
+df <- melt(df)
+plot_method_comparison(df)
+```
+
+```{r warning=FALSE, fig.width=8, fig.height=6}
+# (for convenience, we will use the same set of beads as above)
+# get spill values for interactions in range of interest
+idx <- which(ms %in% ss_ms)
+from <- rep(idx, sapply(spill_cols[idx], length))
+to <- unlist(spill_cols[idx])
+
+spill_vals <- 100 * matrix(do.call(cbind, lapply(sms, function(i) 
+    CATALYST:::make_symetric(i)[cbind(from, to)])), ncol=length(sms))
+
+# plot only interactions above threshold
+fil <- rowMeans(spill_vals) > .5
+spill_vals <- spill_vals[fil, ]
+# order increasingly
+o <- order(rowMeans(spill_vals))
+spill_vals <- spill_vals[o, ]
+deltas <- apply(spill_vals, 1, diff) 
+
+# get labels for interactions
+from <- chs[from[fil][o]]
+to <- chs[to[fil][o]]
+rownames(spill_vals) <- factor(paste0(from, "->", to))
+colnames(spill_vals) <- c("Population based estimation", "Single-cell based estimation")
+
+df1 <- reshape2::melt(spill_vals) 
+df2 <- data.frame(x=seq_len(sum(fil)), y=deltas)
+df3 <- data.frame(x=seq_len(sum(fil)), y=100*deltas/rowMeans(spill_vals))
+plot_classic_vs_default(df1, df2, df3)
+```
+
+### Expected crosstalk interactions
+
+The code snippet below highlights the interactions taken into consideration by the default method for spillover estimation with `computeSpillmat` in `CATALYST`.
+
+```{r message=FALSE, fig.width=4}
+# read in examplary single-stains
+data(ss_exp)
+
+# for each channel, get indices of channels 
+# that are expected to receive spillover
+chs <- colnames(ss_exp)
+ms <- get_ms(chs)
+mets <- get_mets(chs)
+spill_cols <- CATALYST:::get_spill_cols(ms, mets)
+
+# initialize empty spillover matrix
+sm <- diag(length(ms))
+rownames(sm) <- colnames(sm) <- chs
+
+# fill in some value where spillover is expected
+ss_ms <- c(139, 141:156, 158:176)
+for (m in ss_ms) {
+    idx <- which(ms == m)
+    sm[idx, spill_cols[[idx]]] <- .5
+}
+
+# plot spillover matrix
+plotSpillmat(ss_ms, sm, annotate=FALSE)
+```
+
+### Comparison of 4 estimation modes
+
+```{r fig.width=4.5}
+# deconvolution of single-stained beads
+fcs_path <- '../data/Figure_S3/bead replicates/160616_beads.fcs'
+ff <- read.FCS(fcs_path)
+ss_ms <- c(139, 141:156, 158:176)
+res <- assignPrelim(ff, ss_ms, verbose=FALSE)
+sep_cutoffs <- read.table('../data/Figure_S3/sep_cutoffs.txt', check.names=FALSE)
+cutoffs <- c(.4, sep_cutoffs$`160616`)
+res <- applyCutoffs(res, mhl_cutoff=20, cutoffs)
+
+# estimate SM with all modes (note: for method="classic", 
+# the trim-value was selected manually via CATALYST::estTrim)
+sm_default     <- computeSpillmat(res)
+sm_default_all <- computeSpillmat(res, interactions="all")
+sm_classic     <- computeSpillmat(res, method="classic", trim=.01)
+sm_classic_all <- computeSpillmat(res, method="classic", interactions="all", trim=.01)
+sms <- list(sm_default, sm_default_all, sm_classic, sm_classic_all)
+
+# keep only range of interest
+chs <- colnames(sms[[1]])
+ms <- get_ms(chs)
+keep <- ms %in% 139:176
+sms <- lapply(sms, function(sm) sm[, keep])
+# get highest off-diagonal spill
+norm_fact <- max(sapply(sms, function(sm) {
+    sm <- CATALYST:::make_symetric(sm)
+    max(sm[row(sm) != col(sm)])
+}))
+labs1 <- paste("method =", rep(c("\"default\"", "\"classic\""), each=2))
+labs2 <- paste("interactions =", rep(c("\"default\"", "\"all\""), 2))
+mains <- paste0(paste(labs1, "\n"), labs2)
+# wrapper plotSpillmat2 shows spill < 0.001% in black,
+# and scales spill values from 0-1 for visualization
+for (i in seq_along(sms))
+    plotSpillmat2(ss_ms, sms[[i]], norm_fact, mains[i])
+```
