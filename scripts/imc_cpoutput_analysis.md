@@ -1,40 +1,19 @@
----
-title: "Analysis and compensation of CellProfiller output"
-author: 'Vito Zanotelli et al.'
-date: "01/12/2016"
-output:
-  html_document:
-    df_print: paged
-    keep_md: true
-  
----
+# Analysis and compensation of CellProfiller output
+Vito Zanotelli et al.  
+01/12/2016  
 # Aim
 This script visualizes and compensates some CellProfiller output.
 
 ## Load the required libraries
 
-```{r Libraries, include=FALSE}
-library('data.table')
-library('RColorBrewer')
-library(dplyr)
-library(dtplyr)
-library(ggplot2)
-library(tiff)
-library(EBImage)
-library(fields)
-library(raster)
-library(viridis)
 
-library(CATALYST)
-library(raster)
-library(scales)
-```
 
 
 
 ## Settings
 
-```{r imc specific settings}
+
+```r
 # input files: paths to your input and output folder
 fn_cells = '../data/Figure_4/IMC_image/cpoutput/MyExpt_Cells.csv'
 fn_image = '../data/Figure_4/IMC_image/cpoutput//MyExpt_Image.csv'
@@ -61,7 +40,8 @@ cp_measurevars = c('IntegratedIntensity','MeanIntensity','MedianIntensity')
 
 ## small helper functions
 
-```{r}
+
+```r
 getInfoFromString<- function(name,sep='_',strPos=2,censorStr='.fcs'){
   tp <- gsub(censorStr,'',strsplit(name,sep)[[1]][strPos])
   tp <- paste(tp,collapse = sep)
@@ -77,13 +57,13 @@ getInfoFromFileList <- function(fileList,sep='_',strPos=2,censorStr='.fcs'){
 
 ## Script
 Reads in the data
-```{r}
+
+```r
 cells <- fread(fn_cells,header = T)
 ```
 ## Reshape the data into the long format and extract information from the variable name
-```{r}
 
-
+```r
 measurevar = colnames(cells)[grep(paste(paste0(cp_measurevars,'_'),collapse='|'), colnames(cells), ignore.case=TRUE)]
 cells_long = melt.data.table(cells, id.vars =cp_idvars , variable.factor = F,measure.vars = measurevar)
 
@@ -99,9 +79,8 @@ cells_long[,':='(
 
 ## Load the pannel data
 
-```{r}
 
-
+```r
 ###############################################
 ### load dat_pannel information to name channels ###
 ###############################################
@@ -116,11 +95,11 @@ dat_pannel <- merge(dat_pannel[main==1, ], stack_meta, by='metal')
 setnames(dat_pannel,col_channel_label, 'channelname')
 
 dat_pannel[, metal_catalyst := paste0(metal, 'Di')]
-
 ```
 
 ## Load the image meta data
-```{r}
+
+```r
 ###############################################
 ### load image meta data                    ###
 ###############################################
@@ -129,11 +108,11 @@ dat_image <- fread(fn_image,header = T,stringsAsFactors = F)
 # This is actually correct!: , ,
 # optionally one could extract more information from the filename here, e.g. conditions, timepoints, slidenr etc.
 dat_image[, condition := as.character(.BY),by=FileName_FullStack]
-
 ```
 
 ## Filter out unecessary data and clear up
-```{r}
+
+```r
 idcols = colnames(cells_long)[!colnames(cells_long) %in% c('measure', 'value', 'variable', 'measuretype')]
 dat = dcast.data.table(cells_long, formula = paste0(paste(idcols, collapse = '+'), '~', 'measure'), value.var = 'value')
 
@@ -149,7 +128,8 @@ cells_long = NULL
 
 
 # Compensate the mean intensities
-```{r}
+
+```r
 # read the spillover matrix
 sm = as.matrix(read.csv(fn_sm, row.names = 1))
 metavars = c('ImageNumber','ObjectNumber', 'stack')
@@ -175,12 +155,25 @@ dat = tdat %>%
   merge(dat_pannel[, .(metal_catalyst, channelnr)], by='metal_catalyst') %>%
   dplyr::select(-metal_catalyst) %>%
   merge(dat, by=c(metavars, 'channelnr'), all=T)
+```
 
+```
+## WARNING: Compensation is likely to be inaccurate.
+##          Spill values for the following interactions
+##          have not been estimated:
+```
+
+```
+## La139Di -> Gd155Di
+```
+
+```r
 rm(tdat)
 ```
 
 ## Define helper functions to do the scatter plots
-```{r}
+
+```r
 base_breaks <- function(n = 10){
   function(x) {
     c(0,axisTicks(asinh(range(x, na.rm = TRUE)/2), log = TRUE, n = n))
@@ -213,16 +206,25 @@ plot_compscatter <- function(x_var, y_var){
 ```
 
 ## Plot the scatter plots
-```{r}
+
+```r
 x_var = "Er166"
 y_var = "Er167"
 
 p = plot_compscatter( "Er166", "Er167")
 print(p)
+```
 
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
+```r
 p = plot_compscatter( "Er166", "Er168")
 print(p)
+```
 
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-9-2.png)<!-- -->
+
+```r
 #ggsave(p, filename = file.path(out_folder, paste0('scatterplot_',x_var,'vs', y_var,'.pdf')))
 ```
 
@@ -232,7 +234,8 @@ These reproduce Fig. 4 A
 # Generation of mask images
 
 Load all the masks
-```{r}
+
+```r
 read_img_from_fn <- function(fn, basefolder){
   fn = file.path(basefolder, fn)
   return(list(tiff::readTIFF(fn,as.is = T)))
@@ -244,7 +247,8 @@ dat_image[, mask := lapply(ObjectsFileName_Cells,function(fn) read_img_from_fn(f
 ```
 
 ## Define helper functions
-```{r}
+
+```r
 map_values_on_mask <- function(mask, objectids, values){
   # strategy: make a vector where position = objectid +1
   # vector map the values and reshape to an image
@@ -305,31 +309,78 @@ plot_multi_image <- function(dat, dat_image, panmel, metal, vars, imagenumber, s
 ## Plot the masks
 
 An overview over the whole image
-```{r}
+
+```r
 metal = 'Er168'
 img_number =1
 vars = c('MeanIntensity', 'MeanIntensityComp')
 
 x =plot_multi_image(dat, dat_image, panmel = dat_pannel, metal='Er168', vars=vars, imagenumber = img_number, transf=function(x) asinh(x/2))
+```
+
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-12-1.png)<!-- -->![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-12-2.png)<!-- -->
+
+```r
 plot_multi_image(dat, dat_image, panmel = dat_pannel, metal='Er167', vars=vars, imagenumber = img_number, transf=function(x) asinh(x/2))
+```
+
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-12-3.png)<!-- -->![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-12-4.png)<!-- --><div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vars"],"name":[1],"type":["chr"],"align":["left"]},{"label":["maskimg"],"name":[2],"type":["list"],"align":["right"]},{"label":["cmax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cmin"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"MeanIntensity","2":"<dbl [469 × 633]>","3":"4.97784","4":"0"},{"1":"MeanIntensityComp","2":"<dbl [469 × 633]>","3":"4.97784","4":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
 plot_multi_image(dat, dat_image, panmel = dat_pannel, metal='Er166', vars=vars, imagenumber = img_number, transf=function(x) asinh(x/2))
 ```
 
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-12-5.png)<!-- -->![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-12-6.png)<!-- --><div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vars"],"name":[1],"type":["chr"],"align":["left"]},{"label":["maskimg"],"name":[2],"type":["list"],"align":["right"]},{"label":["cmax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cmin"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"MeanIntensity","2":"<dbl [469 × 633]>","3":"262.7214","4":"0"},{"1":"MeanIntensityComp","2":"<dbl [469 × 633]>","3":"262.7214","4":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
 Approximate plot of the regions used in the paper
-```{r}
+
+```r
 metal = 'Er168'
 img_number =1
 vars = c('MeanIntensity', 'MeanIntensityComp')
 
 plot_multi_image(dat, dat_image, panmel = dat_pannel, metal='Er166', vars=vars, imagenumber = img_number, zoom=c(10,100,400,540))
+```
+
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-13-1.png)<!-- -->![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-13-2.png)<!-- --><div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vars"],"name":[1],"type":["chr"],"align":["left"]},{"label":["maskimg"],"name":[2],"type":["list"],"align":["right"]},{"label":["cmax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cmin"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"MeanIntensity","2":"<dbl [91 × 141]>","3":"262.7214","4":"1.491632"},{"1":"MeanIntensityComp","2":"<dbl [91 × 141]>","3":"262.7214","4":"1.491632"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
 plot_multi_image(dat, dat_image, panmel = dat_pannel, metal='Er167', vars=vars, imagenumber = img_number, zoom=c(10,100,400,540))
+```
+
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-13-3.png)<!-- -->![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-13-4.png)<!-- --><div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vars"],"name":[1],"type":["chr"],"align":["left"]},{"label":["maskimg"],"name":[2],"type":["list"],"align":["right"]},{"label":["cmax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cmin"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"MeanIntensity","2":"<dbl [91 × 141]>","3":"4.97784","4":"0"},{"1":"MeanIntensityComp","2":"<dbl [91 × 141]>","3":"4.97784","4":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
 plot_multi_image(dat, dat_image, panmel = dat_pannel, metal='Er168', vars=vars, imagenumber = img_number, zoom=c(10,100,400,540))
 ```
+
+![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-13-5.png)<!-- -->![](imc_cpoutput_analysis_files/figure-html/unnamed-chunk-13-6.png)<!-- --><div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vars"],"name":[1],"type":["chr"],"align":["left"]},{"label":["maskimg"],"name":[2],"type":["list"],"align":["right"]},{"label":["cmax"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["cmin"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"MeanIntensity","2":"<dbl [91 × 141]>","3":"11.89712","4":"0"},{"1":"MeanIntensityComp","2":"<dbl [91 × 141]>","3":"11.89712","4":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 This more or less corresponds to Fig 4 C
 
 ## Save the mask images
 For later visualization in e.g. ImageJ
-```{r save the maskimage tiff}
+
+```r
 channel= chan = 'Er168Di'
 img_number =1
 
@@ -366,7 +417,22 @@ get_and_save_maskimg(
   dat_image=dat_image,
   pannel=dat_pannel
 )
+```
 
+```
+## [1] 263
+## [1] 0.003802281
+## [1] 0
+## [1] 263
+## [1] 0.003802281
+## [1] 0
+```
+
+```
+## [1] 263
+```
+
+```r
 get_and_save_maskimg(
   metal='Er167',
   img_number=1,
@@ -375,7 +441,22 @@ get_and_save_maskimg(
   dat_image=dat_image,
     pannel=dat_pannel
 )
+```
 
+```
+## [1] 5
+## [1] 0.2
+## [1] 0
+## [1] 5
+## [1] 0.2
+## [1] 0
+```
+
+```
+## [1] 5
+```
+
+```r
 get_and_save_maskimg(
   metal='Er168',
   img_number=1,
@@ -384,5 +465,17 @@ get_and_save_maskimg(
   dat_image=dat_image,
     pannel=dat_pannel
 )
+```
 
+```
+## [1] 44
+## [1] 0.02272727
+## [1] 0
+## [1] 44
+## [1] 0.02272727
+## [1] 0
+```
+
+```
+## [1] 44
 ```
