@@ -1,7 +1,10 @@
 ---
 title: "Comparison of spill estimation methods"
 author: "Helena L Crowell"
-output: html_document
+output:
+  html_document:
+    keep_md: True
+  
 ---
 
 # Aim
