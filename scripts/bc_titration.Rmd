@@ -2,7 +2,8 @@
 title: "Saturation effect"
 author: "Helena L Crowell et al."
 output:
-  html_document: default
+  html_document:
+    keep_md: True
   html_notebook: default
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "Assessment of compensation accuracy"
 output:
-  html_document: default
+  html_document:
+    keep_md: true
   html_notebook: default
 ---
 

@@ -4,7 +4,9 @@ author: 'Vito Zanotelli et al.'
 date: "01/12/2016"
 output:
 html_notebook: default
-html_document: default
+html_document:
+  keep_md: True
+  
 ---
 # Aim
 This script visualizes and compensates some CellProfiller output.
@@ -36,7 +38,7 @@ library(scales)
 # input files: paths to your input and output folder
 fn_cells = '../data/Figure_4/IMC_image/cpoutput/MyExpt_Cells.csv'
 fn_image = '../data/Figure_4/IMC_image/cpoutput//MyExpt_Image.csv'
-fn_sm = '../data/Figure_S5/2018-02-06_v1_Spillover_Matrix_2_sm.csv'
+fn_sm = '../data/Figure_S5/paper_version_Spillover_Matrix_2_sm.csv'
 fol_cpout= '../data/Figure_4/IMC_image/cpoutput/'
 out_folder = '../data/Figure_4/IMC_image/R'
 
