@@ -482,7 +482,7 @@ res_uncor = lapply(dats_agg, function(x) re_from_dat(x,
 sms_uncor = lapply(res_uncor, function(x) computeSpillmat(x))
 ```
 
-Assure that the results are exactly the same when ensuring that now debarcoding error happened by using the annotation from the file names:
+Assure that the results are exactly the same when enforcing that no debarcoding error happened by using the annotation from the file names:
 
 
 ```r

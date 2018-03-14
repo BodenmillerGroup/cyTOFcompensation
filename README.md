@@ -42,7 +42,7 @@ Support for our hypothesis that the difference observed in spillover between sin
 4) correlation_analysis.Rmd: \
 [code](scripts/correlation_analysis.Rmd) \
 [markdown](scripts/correlation_analysis.md) \
-[html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/correlation_analysis.html) \
+[html](https://rawgit.com/BodenmillerGroup/cyTOFcompensation/master/scripts/correlation_analysis.html) \
 Explore how spillover and compensation affect correlations and phenograph clusters in a cyTOF dataset.
 This will reproduce, among other plots, the following figures from the paper:
 * Figure 3, A-E
@@ -51,7 +51,7 @@ This will reproduce, among other plots, the following figures from the paper:
 5) spillmat_estimation_stability.Rmd:\
 [code](scripts/spillmat_estimation_stability.Rmd) \
 [markdown](scripts/spillmat_estimation_stability.md) \
-[html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/spillmat_estimationstability.html) \
+[html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/spillmat_estimation_stability.html) \
 Comparison and stability analysis of spillover matrices obtained from 11 single stained bead replicates, 2 IMC measurements, and Fluidigm. Reproduces:
 * Figure S3, B-E
 * Figure S5, B-E
@@ -59,7 +59,7 @@ Comparison and stability analysis of spillover matrices obtained from 11 single 
 6) method_comparison.Rmd:\
 [code](scripts/method_comparison.Rmd) \
 [markdown](scripts/method_comparison.md) \
-[html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/method_comparison.html) \
+[html](https://rawgit.com/BodenmillerGroup/cyTOFcompensation/master/scripts/method_comparison.html) \
 Compares different methods for spillover estimation. Reproduces:
 * Figure S2, C-F
 
@@ -81,7 +81,7 @@ Reproduces:
 4) imc_generatespillmat_short.Rmd:\
 [code](scripts/imc_generatespillmat_short.Rmd) \
 [markdown](scripts/imc_generatespillmat_short.md) \
-[html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_generatespillmat_short.html) \
+[html](https://rawgit.com/BodenmillerGroup/cyTOFcompensation/master/scripts/imc_generatespillmat_short.html) \
 A short version of a script to generate a spillover matrix from an IMC single stain experiment in one step using a convenience function
 
 5) imc_preprocessing.ipynb:\

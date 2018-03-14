@@ -458,7 +458,7 @@ dats_agg_sum = rbindlist(lapply(dats_agg, calc_file_medians), idcol = T)</code><
 <pre><code>## Computing deltas...</code></pre>
 <pre><code>## Computing counts and yields...</code></pre>
 <pre class="r"><code>sms_uncor = lapply(res_uncor, function(x) computeSpillmat(x))</code></pre>
-<p>Assure that the results are exactly the same when ensuring that now debarcoding error happened by using the annotation from the file names:</p>
+<p>Assure that the results are exactly the same when enforcing that no debarcoding error happened by using the annotation from the file names:</p>
 <pre class="r"><code>ndig = 8
 for (i in seq_along(sms)){
 print('all equal?')

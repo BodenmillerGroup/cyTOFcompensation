@@ -265,14 +265,14 @@ datspheno= lapply(dats, function(dat) do_phenograph(dat, good_channels, valuevar
 ```
 
 ```
-##   Finding nearest neighbors...DONE ~ 8.943 s
-##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 4.678 s
-##   Build undirected graph from the weighted links...DONE ~ 2.504 s
-##   Run louvain clustering on the graph ...DONE ~ 3.949 s
+##   Finding nearest neighbors...DONE ~ 7.868 s
+##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 4.948 s
+##   Build undirected graph from the weighted links...DONE ~ 3.048 s
+##   Run louvain clustering on the graph ...DONE ~ 4.236 s
 ```
 
 ```
-## Run Rphenograph DONE, totally takes 20.074s.
+## Run Rphenograph DONE, totally takes 20.1s.
 ```
 
 ```
@@ -288,14 +288,14 @@ datspheno= lapply(dats, function(dat) do_phenograph(dat, good_channels, valuevar
 ```
 
 ```
-##   Finding nearest neighbors...DONE ~ 12.066 s
-##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.145 s
-##   Build undirected graph from the weighted links...DONE ~ 2.692 s
-##   Run louvain clustering on the graph ...DONE ~ 4.467 s
+##   Finding nearest neighbors...DONE ~ 11.314 s
+##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.263 s
+##   Build undirected graph from the weighted links...DONE ~ 2.589 s
+##   Run louvain clustering on the graph ...DONE ~ 5.506 s
 ```
 
 ```
-## Run Rphenograph DONE, totally takes 24.37s.
+## Run Rphenograph DONE, totally takes 24.672s.
 ```
 
 ```
@@ -311,14 +311,14 @@ datspheno= lapply(dats, function(dat) do_phenograph(dat, good_channels, valuevar
 ```
 
 ```
-##   Finding nearest neighbors...DONE ~ 7.587 s
-##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.14 s
-##   Build undirected graph from the weighted links...DONE ~ 2.523 s
-##   Run louvain clustering on the graph ...DONE ~ 3.795 s
+##   Finding nearest neighbors...DONE ~ 9.503 s
+##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.371 s
+##   Build undirected graph from the weighted links...DONE ~ 3.012 s
+##   Run louvain clustering on the graph ...DONE ~ 5.519 s
 ```
 
 ```
-## Run Rphenograph DONE, totally takes 19.045s.
+## Run Rphenograph DONE, totally takes 23.405s.
 ```
 
 ```
@@ -376,29 +376,29 @@ ttsne =  calc_tsne(dats[['raw']], good_channels, value_var = 'counts_transf', ch
 ## Building tree...
 ##  - point 0 of 20000
 ##  - point 10000 of 20000
-## Done in 10.54 seconds (sparsity = 0.006750)!
+## Done in 14.34 seconds (sparsity = 0.006750)!
 ## Learning embedding...
-## Iteration 50: error is 104.475015 (50 iterations in 52.30 seconds)
-## Iteration 100: error is 101.438325 (50 iterations in 88.19 seconds)
-## Iteration 150: error is 87.019123 (50 iterations in 38.28 seconds)
-## Iteration 200: error is 85.054767 (50 iterations in 50.02 seconds)
-## Iteration 250: error is 84.248226 (50 iterations in 39.69 seconds)
-## Iteration 300: error is 3.666333 (50 iterations in 37.49 seconds)
-## Iteration 350: error is 3.412136 (50 iterations in 32.91 seconds)
-## Iteration 400: error is 3.238534 (50 iterations in 29.31 seconds)
-## Iteration 450: error is 3.116084 (50 iterations in 29.25 seconds)
-## Iteration 500: error is 3.023403 (50 iterations in 38.20 seconds)
-## Iteration 550: error is 2.950851 (50 iterations in 32.21 seconds)
-## Iteration 600: error is 2.892485 (50 iterations in 29.52 seconds)
-## Iteration 650: error is 2.843872 (50 iterations in 31.64 seconds)
-## Iteration 700: error is 2.802840 (50 iterations in 34.05 seconds)
-## Iteration 750: error is 2.767604 (50 iterations in 33.21 seconds)
-## Iteration 800: error is 2.737041 (50 iterations in 29.35 seconds)
-## Iteration 850: error is 2.710190 (50 iterations in 28.28 seconds)
-## Iteration 900: error is 2.686808 (50 iterations in 33.81 seconds)
-## Iteration 950: error is 2.666254 (50 iterations in 30.27 seconds)
-## Iteration 1000: error is 2.648096 (50 iterations in 32.35 seconds)
-## Fitting performed in 750.33 seconds.
+## Iteration 50: error is 104.475015 (50 iterations in 62.46 seconds)
+## Iteration 100: error is 101.438325 (50 iterations in 96.47 seconds)
+## Iteration 150: error is 87.019123 (50 iterations in 51.86 seconds)
+## Iteration 200: error is 85.054767 (50 iterations in 41.94 seconds)
+## Iteration 250: error is 84.248226 (50 iterations in 43.33 seconds)
+## Iteration 300: error is 3.666333 (50 iterations in 35.81 seconds)
+## Iteration 350: error is 3.412136 (50 iterations in 41.43 seconds)
+## Iteration 400: error is 3.238534 (50 iterations in 34.75 seconds)
+## Iteration 450: error is 3.116084 (50 iterations in 34.04 seconds)
+## Iteration 500: error is 3.023403 (50 iterations in 38.11 seconds)
+## Iteration 550: error is 2.950851 (50 iterations in 34.16 seconds)
+## Iteration 600: error is 2.892485 (50 iterations in 33.31 seconds)
+## Iteration 650: error is 2.843872 (50 iterations in 34.08 seconds)
+## Iteration 700: error is 2.802840 (50 iterations in 37.92 seconds)
+## Iteration 750: error is 2.767604 (50 iterations in 34.70 seconds)
+## Iteration 800: error is 2.737041 (50 iterations in 33.45 seconds)
+## Iteration 850: error is 2.710190 (50 iterations in 39.25 seconds)
+## Iteration 900: error is 2.686808 (50 iterations in 43.86 seconds)
+## Iteration 950: error is 2.666254 (50 iterations in 33.54 seconds)
+## Iteration 1000: error is 2.648096 (50 iterations in 39.81 seconds)
+## Fitting performed in 844.27 seconds.
 ```
 
 ### The phenograph clusters are plotted on the TSNE map
@@ -519,7 +519,7 @@ dat2mat <- function(data, formula, valuevar){
 This reproduces Figure 3C
 For each phenograph cluster the cluster median is calculated and a heatmap is generated.
 The all heatmap are clustered based on the uncompensated data in order to make them visually easily comparable.
-The colorscake corresponds to the asinh(x/5) transformed count and is kept constant for all the plots to make them directly comparable.
+The colorscale corresponds to the asinh(x/5) transformed count and is kept constant for all the plots to make them directly comparable.
 
 
 ```r
@@ -588,7 +588,8 @@ With the 'classical' compensation a slight overcompensation is visible that is n
 
 
 
-Extra figure not used;
+Extra figure not used:
+
 It would be interesting how these heatmaps looks on a linear scale. Thus instead of arcsinh scaling, each channel is scalled by dividing it through the maximal cluster median of the untransformed data. Thus the scale is linear and comparable between the plots:
 
 ```r
@@ -780,7 +781,7 @@ corcluster = rbindlist(corcluster)
 Based on the data generated above, the change in  number of significant single cell marker correlations per cluster is investigated.
 This is the basis for figure 3C.
 
-Not shown in the paper is the 'classical' compensation, which leads to sometimes quite a significant amount of artifical correlations due to slight overcompen. This is another argument for the NNLS.
+Not shown in the paper is the 'classical' compensation, which leads to sometimes quite a significant amount of artifical correlations due to slight overcompensation. This is another argument for the NNLS.
 
 
 
@@ -961,6 +962,7 @@ ggplot(corr_tab_antibody, aes(x=dataset, y=within_cor, color=as.factor(antibody)
 ```
 
 ![](correlation_analysis_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+
 -> As expected and visible in the heatmaps, the correlation between same antibodies labeled with different metals increases after compensation (in particular CD20: 0.5 -> 0.9)
 
 

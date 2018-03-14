@@ -138,8 +138,8 @@ img = fread(fn_img,sep = '\t')
 ```
 ## 
 Read 0.0% of 296877 rows
-Read 60.6% of 296877 rows
-Read 296877 rows and 52 (of 52) columns from 0.087 GB file in 00:00:05
+Read 84.2% of 296877 rows
+Read 296877 rows and 52 (of 52) columns from 0.087 GB file in 00:00:04
 ```
 
 ## visualize the img
@@ -173,6 +173,7 @@ col2img(img, '(Er167Di)')  %>%
 ```
 
 ![](imc_comp_txt_example_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
 ## Compensate the image
 
 
@@ -231,6 +232,7 @@ img_comp = comp_datimg(img, sm = sm)
 ```
 ## Ru99Di -> Ru96Di, Ru98Di, Ru100Di, Ru101Di, Ru102Di, Ru104Di
 ```
+
 ### Visualization after compensation
 
 ```r
@@ -245,12 +247,20 @@ col2img(img_comp, '(Er167Di)')  %>%
 ```
 
 ![](imc_comp_txt_example_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
 ### Write the image file
 
 fwrite is a fast way to write .txt files
 
 ```r
 fwrite(img_comp, file=file.path(fol_out, fn_out),sep='\t')
+```
+
+```
+## 
+Written 8.7% of 296877 rows in 2 secs using 32 threads. anyBufferGrown=no; maxBuffUsed=35%. Finished in 20 secs.      
+Written 100.0% of 296877 rows in 4 secs using 32 threads. anyBufferGrown=no; maxBuffUsed=35%. Finished in 0 secs.      
+                                                                                                                                     
 ```
 
 

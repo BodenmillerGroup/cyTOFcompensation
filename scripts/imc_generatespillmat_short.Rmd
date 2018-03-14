@@ -27,7 +27,7 @@ source('spillover_imc_helpers.R')
 
 ## setup the configuration variables
 ```{r Setup}
-# list of folders that contain each a complete single stain acquisition (e.g. in case that one wants to run and compare multiple single stains from different days)
+# a folder containing a complete single stain acquisition
 fol_ss = '../data/Figure_S5/Spillover_Matrix_2'
 ```
 Example for estimation of the spillover matrix from a folder of single stains

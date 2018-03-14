@@ -1,8 +1,8 @@
-# Image Compensation
+# Adapt spillover matrix for IMC compensation
 Vito Zanotelli et al.  
 
-Adapts the spillover matrix
-# Compensate an IMC image
+# Adapts the spillover matrix for use in CellProfiller
+
 
 ```r
 library(CATALYST)
@@ -13,6 +13,7 @@ library(CATALYST)
 
 ```r
 fn_sm = '../data/Figure_S5/paper_version_Spillover_Matrix_2_sm.csv'
+# a csv with a list of metals used, generated from the IMC preprocessing ipython notebook:
 fn_imc_metals = '../data/Figure_4/IMC_image/analysis/imc_example_image_a0_full.csv'
 fol_out = dirname(fn_imc_metals)
 prefix_out =  'adapted_'
@@ -39,6 +40,7 @@ sm_table = CATALYST::adaptSpillmat(input_sm = as.matrix(sm), out_chs = analysis_
 ## La139Di -> Gd155Di
 ```
 
+Writes out a 32bit tiff that can be used in CellProfiller together with the "CorrectSpilloverApply" module
 
 ```r
 tiff::writeTIFF(sm_table, file.path(fol_out, 'imc_full_sm.tiff'), bits.per.sample = 32, reduce = T)

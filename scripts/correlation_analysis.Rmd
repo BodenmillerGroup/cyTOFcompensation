@@ -409,7 +409,7 @@ dat2mat <- function(data, formula, valuevar){
 This reproduces Figure 3C
 For each phenograph cluster the cluster median is calculated and a heatmap is generated.
 The all heatmap are clustered based on the uncompensated data in order to make them visually easily comparable.
-The colorscake corresponds to the asinh(x/5) transformed count and is kept constant for all the plots to make them directly comparable.
+The colorscale corresponds to the asinh(x/5) transformed count and is kept constant for all the plots to make them directly comparable.
 
 ```{r}
 
@@ -478,7 +478,8 @@ With the 'classical' compensation a slight overcompensation is visible that is n
 
 
 
-Extra figure not used;
+Extra figure not used:
+
 It would be interesting how these heatmaps looks on a linear scale. Thus instead of arcsinh scaling, each channel is scalled by dividing it through the maximal cluster median of the untransformed data. Thus the scale is linear and comparable between the plots:
 ```{r}
 
@@ -664,7 +665,7 @@ corcluster = rbindlist(corcluster)
 Based on the data generated above, the change in  number of significant single cell marker correlations per cluster is investigated.
 This is the basis for figure 3C.
 
-Not shown in the paper is the 'classical' compensation, which leads to sometimes quite a significant amount of artifical correlations due to slight overcompen. This is another argument for the NNLS.
+Not shown in the paper is the 'classical' compensation, which leads to sometimes quite a significant amount of artifical correlations due to slight overcompensation. This is another argument for the NNLS.
 
 
 ```{r, fig.height=7, fig.width=5}
@@ -831,6 +832,7 @@ ggplot(corr_tab_antibody, aes(x=dataset, y=within_cor, color=as.factor(antibody)
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ```
+
 -> As expected and visible in the heatmaps, the correlation between same antibodies labeled with different metals increases after compensation (in particular CD20: 0.5 -> 0.9)
 
 ```{r}
