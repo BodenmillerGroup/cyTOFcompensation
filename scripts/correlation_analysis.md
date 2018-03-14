@@ -243,9 +243,9 @@ do_phenograph<- function(data, channels, valuevar= 'counts_transf', seed=1234, s
   set.seed(seed)
   rpheno_out = Rphenograph::Rphenograph(pheno_dat_samp)
   cluster = igraph::membership(rpheno_out[[2]])
-  pheno_clust = data.table::data.table(cluster)
-  pheno_clust[, id:=ids]
-  pheno_clust[, cluster:=factor(cluster)]
+  pheno_clust = data.table::data.table(x=ids)
+  setnames(pheno_clust, 'x', 'id')
+  pheno_clust[, cluster:=factor(cluster[as.character(seq(length(ids)))])]
   data.table::setkey(pheno_clust, 'id')
   pheno_clust = pheno_clust[all_ids ,]
   
@@ -265,14 +265,14 @@ datspheno= lapply(dats, function(dat) do_phenograph(dat, good_channels, valuevar
 ```
 
 ```
-##   Finding nearest neighbors...DONE ~ 8.486 s
-##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 4.792 s
-##   Build undirected graph from the weighted links...DONE ~ 2.471 s
-##   Run louvain clustering on the graph ...DONE ~ 3.809 s
+##   Finding nearest neighbors...DONE ~ 8.943 s
+##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 4.678 s
+##   Build undirected graph from the weighted links...DONE ~ 2.504 s
+##   Run louvain clustering on the graph ...DONE ~ 3.949 s
 ```
 
 ```
-## Run Rphenograph DONE, totally takes 19.558s.
+## Run Rphenograph DONE, totally takes 20.074s.
 ```
 
 ```
@@ -288,14 +288,14 @@ datspheno= lapply(dats, function(dat) do_phenograph(dat, good_channels, valuevar
 ```
 
 ```
-##   Finding nearest neighbors...DONE ~ 8.18 s
-##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.128 s
-##   Build undirected graph from the weighted links...DONE ~ 2.457 s
-##   Run louvain clustering on the graph ...DONE ~ 4.515 s
+##   Finding nearest neighbors...DONE ~ 12.066 s
+##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.145 s
+##   Build undirected graph from the weighted links...DONE ~ 2.692 s
+##   Run louvain clustering on the graph ...DONE ~ 4.467 s
 ```
 
 ```
-## Run Rphenograph DONE, totally takes 20.28s.
+## Run Rphenograph DONE, totally takes 24.37s.
 ```
 
 ```
@@ -311,14 +311,14 @@ datspheno= lapply(dats, function(dat) do_phenograph(dat, good_channels, valuevar
 ```
 
 ```
-##   Finding nearest neighbors...DONE ~ 6.945 s
-##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.303 s
-##   Build undirected graph from the weighted links...DONE ~ 2.333 s
-##   Run louvain clustering on the graph ...DONE ~ 3.369 s
+##   Finding nearest neighbors...DONE ~ 7.587 s
+##   Compute jaccard coefficient between nearest-neighbor sets...DONE ~ 5.14 s
+##   Build undirected graph from the weighted links...DONE ~ 2.523 s
+##   Run louvain clustering on the graph ...DONE ~ 3.795 s
 ```
 
 ```
-## Run Rphenograph DONE, totally takes 17.95s.
+## Run Rphenograph DONE, totally takes 19.045s.
 ```
 
 ```
@@ -376,29 +376,29 @@ ttsne =  calc_tsne(dats[['raw']], good_channels, value_var = 'counts_transf', ch
 ## Building tree...
 ##  - point 0 of 20000
 ##  - point 10000 of 20000
-## Done in 10.76 seconds (sparsity = 0.006750)!
+## Done in 10.54 seconds (sparsity = 0.006750)!
 ## Learning embedding...
-## Iteration 50: error is 104.475015 (50 iterations in 44.80 seconds)
-## Iteration 100: error is 101.438325 (50 iterations in 91.51 seconds)
-## Iteration 150: error is 87.019123 (50 iterations in 42.19 seconds)
-## Iteration 200: error is 85.054767 (50 iterations in 39.38 seconds)
-## Iteration 250: error is 84.248226 (50 iterations in 39.62 seconds)
-## Iteration 300: error is 3.666333 (50 iterations in 35.63 seconds)
-## Iteration 350: error is 3.412136 (50 iterations in 32.48 seconds)
-## Iteration 400: error is 3.238534 (50 iterations in 34.45 seconds)
-## Iteration 450: error is 3.116084 (50 iterations in 32.41 seconds)
-## Iteration 500: error is 3.023403 (50 iterations in 34.28 seconds)
-## Iteration 550: error is 2.950851 (50 iterations in 33.49 seconds)
-## Iteration 600: error is 2.892485 (50 iterations in 31.23 seconds)
-## Iteration 650: error is 2.843872 (50 iterations in 31.95 seconds)
-## Iteration 700: error is 2.802840 (50 iterations in 30.10 seconds)
-## Iteration 750: error is 2.767604 (50 iterations in 31.97 seconds)
-## Iteration 800: error is 2.737041 (50 iterations in 29.71 seconds)
-## Iteration 850: error is 2.710190 (50 iterations in 33.00 seconds)
-## Iteration 900: error is 2.686808 (50 iterations in 31.70 seconds)
-## Iteration 950: error is 2.666254 (50 iterations in 32.95 seconds)
-## Iteration 1000: error is 2.648096 (50 iterations in 35.49 seconds)
-## Fitting performed in 748.34 seconds.
+## Iteration 50: error is 104.475015 (50 iterations in 52.30 seconds)
+## Iteration 100: error is 101.438325 (50 iterations in 88.19 seconds)
+## Iteration 150: error is 87.019123 (50 iterations in 38.28 seconds)
+## Iteration 200: error is 85.054767 (50 iterations in 50.02 seconds)
+## Iteration 250: error is 84.248226 (50 iterations in 39.69 seconds)
+## Iteration 300: error is 3.666333 (50 iterations in 37.49 seconds)
+## Iteration 350: error is 3.412136 (50 iterations in 32.91 seconds)
+## Iteration 400: error is 3.238534 (50 iterations in 29.31 seconds)
+## Iteration 450: error is 3.116084 (50 iterations in 29.25 seconds)
+## Iteration 500: error is 3.023403 (50 iterations in 38.20 seconds)
+## Iteration 550: error is 2.950851 (50 iterations in 32.21 seconds)
+## Iteration 600: error is 2.892485 (50 iterations in 29.52 seconds)
+## Iteration 650: error is 2.843872 (50 iterations in 31.64 seconds)
+## Iteration 700: error is 2.802840 (50 iterations in 34.05 seconds)
+## Iteration 750: error is 2.767604 (50 iterations in 33.21 seconds)
+## Iteration 800: error is 2.737041 (50 iterations in 29.35 seconds)
+## Iteration 850: error is 2.710190 (50 iterations in 28.28 seconds)
+## Iteration 900: error is 2.686808 (50 iterations in 33.81 seconds)
+## Iteration 950: error is 2.666254 (50 iterations in 30.27 seconds)
+## Iteration 1000: error is 2.648096 (50 iterations in 32.35 seconds)
+## Fitting performed in 750.33 seconds.
 ```
 
 ### The phenograph clusters are plotted on the TSNE map

@@ -2,12 +2,9 @@
 html_document: default
 title: "Correlation analysis"
 author: Vito Zanotelli, et al.
-html_notebook: default
 output:
   html_document:
-    df_print: paged
-    keep_md: true
-code_folding: hide
+    keep_md: True
 ---
 
 
@@ -245,9 +242,9 @@ do_phenograph<- function(data, channels, valuevar= 'counts_transf', seed=1234, s
   set.seed(seed)
   rpheno_out = Rphenograph::Rphenograph(pheno_dat_samp)
   cluster = igraph::membership(rpheno_out[[2]])
-  pheno_clust = data.table::data.table(cluster)
-  pheno_clust[, id:=ids]
-  pheno_clust[, cluster:=factor(cluster)]
+  pheno_clust = data.table::data.table(x=ids)
+  setnames(pheno_clust, 'x', 'id')
+  pheno_clust[, cluster:=factor(cluster[as.character(seq(length(ids)))])]
   data.table::setkey(pheno_clust, 'id')
   pheno_clust = pheno_clust[all_ids ,]
   
