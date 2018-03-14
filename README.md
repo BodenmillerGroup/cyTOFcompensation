@@ -20,7 +20,7 @@ If you want to run the scripts below this needs to be run first.
 1) dilution_series.Rmd: \
 [code](scripts/dilution_series.Rmd) \
 [markdown](scripts/dilution_series.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/dilution_series.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/dilution_series.html) \
 Assesses the linearity of spillover based on a dilution series of antibody staining
 This will reproduce, among other plots, the following figures from the paper:
 * Figure 1, C
@@ -28,21 +28,21 @@ This will reproduce, among other plots, the following figures from the paper:
 2) even_odd.Rmd: \
 [code](scripts/even_odd.Rmd) \
 [markdown](scripts/even_odd.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/even_odd.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/even_odd.html) \
 Assessment of compensation accuracy for single stained beads vs. multiplexed cells. Reproduces:
 * Figure 2, C
 
 3) bc_titration.Rmd: \
 [code](scripts/bc_titration.Rmd) \
 [markdown](scripts/bc_titration.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/bc_titration.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/bc_titration.html) \
 Support for our hypothesis that the difference observed in spillover between single-stained beads and multiplexed-stained cells is due to saturation effects. Reproduces:
 * Figure 2, D+E 
 
 4) correlation_analysis.Rmd: \
 [code](scripts/correlation_analysis.Rmd) \
 [markdown](scripts/correlation_analysis.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/correlation_analysis.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/correlation_analysis.html) \
 Explore how spillover and compensation affect correlations and phenograph clusters in a cyTOF dataset.
 This will reproduce, among other plots, the following figures from the paper:
 * Figure 3, A-E
@@ -51,7 +51,7 @@ This will reproduce, among other plots, the following figures from the paper:
 5) spillmat_estimation_stability.Rmd:\
 [code](scripts/spillmat_estimation_stability.Rmd) \
 [markdown](scripts/spillmat_estimation_stability.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/spillmat_estimationstability.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/spillmat_estimationstability.html) \
 Comparison and stability analysis of spillover matrices obtained from 11 single stained bead replicates, 2 IMC measurements, and Fluidigm. Reproduces:
 * Figure S3, B-E
 * Figure S5, B-E
@@ -59,7 +59,7 @@ Comparison and stability analysis of spillover matrices obtained from 11 single 
 6) method_comparison.Rmd:\
 [code](scripts/method_comparison.Rmd) \
 [markdown](scripts/method_comparison.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/method_comparison.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/method_comparison.html) \
 Compares different methods for spillover estimation. Reproduces:
 * Figure S2, C-F
 
@@ -72,7 +72,7 @@ Contains helper functions to plot the results of the above scripts.
 3) imc_generatespillmat_long.Rmd:\
 [code](scripts/imc_generatespillmat_long.Rmd) \
 [markdown](scripts/imc_generatespillmat_long.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_generatespillmat_long.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_generatespillmat_long.html) \
 A detailed step by step script to calculate a spillover matrix from a single stain experiment.
 Reproduces:
 * Figure S5, A
@@ -81,7 +81,7 @@ Reproduces:
 4) imc_generatespillmat_short.Rmd:\
 [code](scripts/imc_generatespillmat_short.Rmd) \
 [markdown](scripts/imc_generatespillmat_short.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_generatespillmat_short.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_generatespillmat_short.html) \
 A short version of a script to generate a spillover matrix from an IMC single stain experiment in one step using a convenience function
 
 5) imc_preprocessing.ipynb:\
@@ -100,7 +100,7 @@ Adapts the spillover matrix and saves it as a TIFF for usage in the CellProfille
 7) imc_cpoutput_analysis.Rmd:\
 [code](scripts/imc_cpoutput_analysis.Rmd) \
 [markdown](scripts/imc_cpoutput_analysis.md) \
-[html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_cpoutput_analysis.html) \
+[html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_cpoutput_analysis.html) \
 Script that was used to compensate the CellProfiller output and display the segmented data on the masks.
 Reproduces:
 * Figure 3, D
@@ -114,7 +114,7 @@ Bonus scripts:
 - imc_comp_txt_example.Rmd:\
   [code](scripts/imc_comp_txt_example.Rmd) \
   [markdown](scripts/imc_comp_txt_example.md) \
-  [html](https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_comp_txt_example.html) \
+  [html](http://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_comp_txt_example.html) \
   A supplemenatry script that shows how to directly compensate an IMC .txt raw data file and save it back as a .txt
   This was requested in the imc-forum: https://www.imc-forum.org/viewtopic.php?f=4&p=30#p13
   
