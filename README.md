@@ -1,7 +1,6 @@
 # cyTOF compensation
 
-This repository contains scripts used to reproduce a majority of figures from the paper "Compensation of signal spillover in suspension and imaging mass cytometry" by Stéphane Chevrier\*, Helena L. Crowell\*, Vito R.T. Zanotelli\*, Stefanie Engler, Mark D. Robinson, and Bernd Bodenmiller
-available which is currently in press.
+This repository contains scripts used to reproduce a majority of figures from the paper "Compensation of signal spillover in suspension and imaging mass cytometry" by Stéphane Chevrier\*, Helena L. Crowell\*, Vito R.T. Zanotelli\*, Stefanie Engler, Mark D. Robinson, and Bernd Bodenmiller which is published in 'Cell Systems' as "Compensation of Signal Spillover in Suspension and Imaging Mass Cytometry" (http://www.cell.com/cell-systems/abstract/S2405-4712(18)30063-2)
 
 The bioRxiv version was made available under the name "Channel crosstalk correction in suspension and imaging mass cytometry": https://www.biorxiv.org/content/early/2017/09/07/185744
 
@@ -69,7 +68,7 @@ Contains helper functions to plot the results of the above scripts.
 
 ## Imaging mass cytometry compensation
 
-3) imc_generatespillmat_long.Rmd:\
+8) imc_generatespillmat_long.Rmd:\
 [code](scripts/imc_generatespillmat_long.Rmd) \
 [markdown](scripts/imc_generatespillmat_long.md) \
 [html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_generatespillmat_long.html) \
@@ -78,26 +77,26 @@ Reproduces:
 * Figure S5, A
 * Figure 4, A
 
-4) imc_generatespillmat_short.Rmd:\
+9) imc_generatespillmat_short.Rmd:\
 [code](scripts/imc_generatespillmat_short.Rmd) \
 [markdown](scripts/imc_generatespillmat_short.md) \
 [html](https://rawgit.com/BodenmillerGroup/cyTOFcompensation/master/scripts/imc_generatespillmat_short.html) \
 A short version of a script to generate a spillover matrix from an IMC single stain experiment in one step using a convenience function
 
-5) imc_preprocessing.ipynb:\
+10) imc_preprocessing.ipynb:\
 [code](scripts/imc_preprocessing.ipynb) \
 A script to convert & process IMC images for segmentation. Adapted from: https://github.com/BodenmillerGroup/ImcSegmentationPipeline
 The CellProfiller & ilastik pipelines that were used for the IMC image analysis can be found in the data/IMC_image/pipelines
 
 The segmentation output produced by the IMC image analysis is then analysed in script 7). The compensated images saved were used in ImageJ to reproduce Figure 4, B
 
-6) imc_adaptsm.Rmd:\
+11) imc_adaptsm.Rmd:\
 [code](scripts/imc_adaptsm.Rmd) \
 [markdown](scripts/imc_adaptsm.md) \
 [html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_adaptsm.html) \
 Adapts the spillover matrix and saves it as a TIFF for usage in the CellProfiller pipeline.
 
-7) imc_cpoutput_analysis.Rmd:\
+12) imc_cpoutput_analysis.Rmd:\
 [code](scripts/imc_cpoutput_analysis.Rmd) \
 [markdown](scripts/imc_cpoutput_analysis.md) \
 [html](https://htmlpreview.github.io/?https://github.com/BodenmillerGroup/cyTOFcompensation/blob/master/scripts/imc_cpoutput_analysis.html) \
@@ -106,7 +105,7 @@ Reproduces:
 * Figure 3, D
 and produces the mask images visualized in Fig 4 C using ImageJ
 
-8) spillover_imc_helpers.R:\
+13) spillover_imc_helpers.R:\
 [code](scripts/spillover_imc_helpers.R) \
 Contains various helper functions used in the scripts above.
 
