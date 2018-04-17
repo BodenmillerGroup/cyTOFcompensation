@@ -1,5 +1,11 @@
-# Spillover estimation IMC
-Vito Zanotelli et al.  
+---
+title: "Spillover estimation IMC"
+author: 'Vito Zanotelli et al.'
+output:
+  html_document:
+    df_print: paged
+    keep_md: true
+---
 
 # Aim
 This script shows how to estimate spillover from single metal spots on an agarose coated slide.
@@ -133,7 +139,7 @@ Then this identified, strong single stain pixels will be used for the spillover 
 res = lapply(dats_agg, function(x) re_from_dat(x,
                                                ss_ms=x[!is.na(mass), unique(mass)],
                                                minevents = 40,
-                                              correct_bc = x[ , unique(mass)]))
+                                              correct_bc = T))
 ```
 
 ```
@@ -758,37 +764,37 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] stringi_1.1.5       ggpmisc_0.2.16      stringr_1.2.0      
+## [1] stringi_1.1.7       ggpmisc_0.2.16      stringr_1.3.0      
 ## [4] dtplyr_0.0.2        dplyr_0.7.4         flowCore_1.42.3    
-## [7] ggplot2_2.2.1       data.table_1.10.4-1 CATALYST_1.1.5     
+## [7] ggplot2_2.2.1       data.table_1.10.4-3 CATALYST_1.1.5     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Biobase_2.36.2      httr_1.3.1          tidyr_0.7.1        
-##  [4] viridisLite_0.2.0   jsonlite_1.5        splines_3.4.1      
+##  [1] Biobase_2.36.2      httr_1.3.1          tidyr_0.8.0        
+##  [4] viridisLite_0.3.0   jsonlite_1.5        splines_3.4.1      
 ##  [7] gtools_3.5.0        shiny_1.0.5         assertthat_0.2.0   
-## [10] stats4_3.4.1        yaml_2.1.16         robustbase_0.92-7  
-## [13] backports_1.1.1     lattice_0.20-35     quantreg_5.33      
-## [16] glue_1.1.1          digest_0.6.15       RColorBrewer_1.1-2 
-## [19] minqa_1.2.4         colorspace_1.3-2    sandwich_2.4-0     
-## [22] httpuv_1.3.5        htmltools_0.3.6     Matrix_1.2-11      
-## [25] plyr_1.8.4          pcaPP_1.9-72        pkgconfig_2.0.1    
-## [28] SparseM_1.77        xtable_1.8-2        purrr_0.2.3        
-## [31] corpcor_1.6.9       mvtnorm_1.0-6       scales_0.5.0       
-## [34] lme4_1.1-14         MatrixModels_0.4-1  tibble_1.3.4       
-## [37] mgcv_1.8-22         car_2.1-5           TH.data_1.0-8      
-## [40] nnet_7.3-12         BiocGenerics_0.22.1 lazyeval_0.2.0     
-## [43] pbkrtest_0.4-7      mime_0.5            survival_2.41-3    
-## [46] magrittr_1.5        evaluate_0.10.1     nlme_3.1-131       
-## [49] MASS_7.3-47         graph_1.54.0        tools_3.4.1        
-## [52] matrixStats_0.53.0  multcomp_1.4-8      plotly_4.7.1       
-## [55] munsell_0.4.3       cluster_2.0.6       plotrix_3.7        
-## [58] bindrcpp_0.2        compiler_3.4.1      rlang_0.1.2        
-## [61] grid_3.4.1          nloptr_1.0.4        drc_3.0-1          
-## [64] htmlwidgets_1.0     crosstalk_1.0.0     labeling_0.3       
-## [67] rmarkdown_1.6       gtable_0.2.0        codetools_0.2-15   
-## [70] polynom_1.3-9       reshape2_1.4.3      rrcov_1.4-3        
-## [73] R6_2.2.2            gridExtra_2.3       nnls_1.4           
-## [76] zoo_1.8-0           knitr_1.17          bindr_0.1          
-## [79] rprojroot_1.2       parallel_3.4.1      Rcpp_0.12.15       
-## [82] DEoptimR_1.0-8
+## [10] stats4_3.4.1        yaml_2.1.18         robustbase_0.92-8  
+## [13] pillar_1.2.1        backports_1.1.2     lattice_0.20-35    
+## [16] quantreg_5.35       glue_1.2.0          digest_0.6.15      
+## [19] RColorBrewer_1.1-2  minqa_1.2.4         colorspace_1.3-2   
+## [22] sandwich_2.4-0      httpuv_1.3.6.2      htmltools_0.3.6    
+## [25] Matrix_1.2-12       plyr_1.8.4          pcaPP_1.9-73       
+## [28] pkgconfig_2.0.1     SparseM_1.77        xtable_1.8-2       
+## [31] purrr_0.2.4         corpcor_1.6.9       mvtnorm_1.0-7      
+## [34] scales_0.5.0        lme4_1.1-15         MatrixModels_0.4-1 
+## [37] tibble_1.4.2        mgcv_1.8-23         car_2.1-6          
+## [40] TH.data_1.0-8       nnet_7.3-12         BiocGenerics_0.22.1
+## [43] lazyeval_0.2.1      pbkrtest_0.4-7      mime_0.5           
+## [46] survival_2.41-3     magrittr_1.5        evaluate_0.10.1    
+## [49] nlme_3.1-131.1      MASS_7.3-49         graph_1.54.0       
+## [52] tools_3.4.1         matrixStats_0.53.1  multcomp_1.4-8     
+## [55] plotly_4.7.1        munsell_0.4.3       cluster_2.0.6      
+## [58] plotrix_3.7         bindrcpp_0.2        compiler_3.4.1     
+## [61] rlang_0.2.0         grid_3.4.1          nloptr_1.0.4       
+## [64] drc_3.0-1           htmlwidgets_1.0     crosstalk_1.0.0    
+## [67] labeling_0.3        rmarkdown_1.9       gtable_0.2.0       
+## [70] codetools_0.2-15    polynom_1.3-9       reshape2_1.4.3     
+## [73] rrcov_1.4-3         R6_2.2.2            gridExtra_2.3      
+## [76] nnls_1.4            zoo_1.8-1           knitr_1.20         
+## [79] bindr_0.1.1         rprojroot_1.3-2     parallel_3.4.1     
+## [82] Rcpp_0.12.16        DEoptimR_1.0-8
 ```

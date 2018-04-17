@@ -126,7 +126,7 @@ Then this identified, strong single stain pixels will be used for the spillover 
 res = lapply(dats_agg, function(x) re_from_dat(x,
                                                ss_ms=x[!is.na(mass), unique(mass)],
                                                minevents = 40,
-                                              correct_bc = x[ , unique(mass)]))
+                                              correct_bc = T))
 sms = lapply(res, function(x) computeSpillmat(x))
 
 
