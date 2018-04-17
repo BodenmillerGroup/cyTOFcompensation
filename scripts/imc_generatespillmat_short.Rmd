@@ -65,8 +65,12 @@ In case the spillover matrix should be written out
 Alternatively the function can also be called with a list of single stain masses, if the metals are not contained in the filename
 ```{r}
 ssmass = c(161, 162, 163, 164, 166, 167, 168, 170, 151, 153, 155, 156, 158, 160, 165, 113, 115, 175, 142, 143, 144, 145, 146, 148, 150, 141, 147, 149, 152, 154, 159, 169, 171, 172, 173, 174, 176)
-res = estimate_sm_from_imc_txtfol(fol_ss, ssmetals_from_fn=F,ssmass = ssmass )
+res = estimate_sm_from_imc_txtfol(fol_ss, ssmetals_from_fn=F,ssmass = ssmass, remove_incorrect_bc = F )
 ```
+```{r}
+CATALYST::plotSpillmat(1:10000,res[['sm']])
+```
+
 
 ```{r}
 sessionInfo()

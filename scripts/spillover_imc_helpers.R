@@ -140,7 +140,7 @@ re_from_dat <- function(dat, ss_ms, minevents=10, correct_bc=NULL){
   re <- applyCutoffs(re)
   
   # filter for conditions with less then minevents
-  if (!is.null(correct_bc)){
+  if (!is.null(correct_bc) && correct_bc) {
     re = ensure_correct_bc(re, dat[, mass])
   }
   
