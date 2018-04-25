@@ -88,7 +88,7 @@ col2img(img_comp, '(Er167Di)')  %>%
 
 fwrite is a fast way to write .txt files
 ```{r}
-fwrite(img_comp, file=file.path(fol_out, fn_out),sep='\t')
+fwrite(img_comp, file=file.path(fol_out, fn_out),sep='\t',eol='\r\n')
 ```
 
 ```{r}
