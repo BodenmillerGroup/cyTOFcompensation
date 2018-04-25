@@ -53,12 +53,29 @@ CATALYST::plotSpillmat(1:10000,res[['sm']])
 ```
 
 Quality control: Distribution of medians per file
+
+Note the fig.height and fig.width parameters, that can be adjusted if your own data has more facets.
 ```{r fig.height=20, fig.width=20}
 plot_file_medians(res[['data']])
 ```
+
+Additionally transforming the y axis with a squareroot transform can make the plots more readable, especially if outlier channels are acquired.
+```{r, fig.height=20, fig.width=20}
+p = plot_file_medians(res[['data']])
+p + scale_y_sqrt()
+```
+
+In some cases, e.g. when Argon was acquired, the plot above might not be informative, thus one can also calculate the medians directly and either write them to csv or use the Rstudio variable browser to inspect the results, e.g.
+```{r}
+dat_medians = calc_file_medians(res[['data']]) %>%
+  dcast('metal+mass+file ~ variable', value.var='med')
+dat_medians
+```
+
+
 In case the spillover matrix should be written out
 ```{r}
-#write.csv(res[['sm']],file = 'path/sm.csv')
+write.csv(res[['sm']],file = '../data/sm.csv')
 ```
 
 
