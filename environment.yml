@@ -1,0 +1,25 @@
+name: cytofcompensation
+channels:
+  - bioconda
+  - r
+  - defaults
+  - conda-forge
+dependencies:
+  - bioconductor-catalyst=1.6
+  - r::r-stringr
+  - r-ggpmisc
+  - r-data.table
+  - r-dtplyr
+  - r-ggplot2
+  - bioconductor-flowcore
+  - r-tiff
+  - r::rstudio
+  - r-plotly
+  - r-matrixstats
+  - r-reshape2
+  - r-raster
+  - r-viridis
+  - bioconductor-ebimage
+  - r-scales
+  - r-fields
+  - plotly

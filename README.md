@@ -8,6 +8,23 @@ The raw data is available from Mendeley data under the DOI code 10.17632/v58yj49
 The CATALYST package developed specifically to allow a user friendly usage of the developped spillover estimation and compensation approach can be found for download at: http://bioconductor.org/packages/CATALYST
 A link to the light version of the web app, installation instructions, example datasets, and vignettes for CATALYST are available from the project page: https://catalyst-project.github.io/. 
 
+Due to changes in CATALYST, this repository only works with older versions. To generate a compatible enviornment, we suggest you to use conda:
+https://docs.conda.io/projects/conda/en/latest/user-guide/install/#
+
+To install the environment use:
+```
+conda create -f environment environment/cytofcompensation_env.yml
+```
+
+This was tested on Ubuntu 18.04.
+Alternatively we provide a dockerfile to generate a container:
+
+```
+environment/Dockerfile
+```
+
+
+
 The repository is organized in the following scripts:
 
 0) retrieve_data.R:\

@@ -9,11 +9,11 @@
 #              'https://data.mendeley.com/datasets/v58yj49pfr/draft/files/3ef240f2-96ab-4dd7-aba4-68150c286990/Figure_4.zip?dl=1',
 #              'https://data.mendeley.com/datasets/v58yj49pfr/draft/files/8ac64093-0273-4ae3-a53e-fdb3348ee7ac/Figure_S5.zip?dl=1')
 
-urls_data = c('https://data.mendeley.com/datasets/v58yj49pfr/1/files/4cd060d1-9714-4040-ad24-9aa48b47d520/Figure_1.zip?dl=1',
-              'https://data.mendeley.com/datasets/v58yj49pfr/1/files/eeefe10c-49f8-4dc6-84b5-0fd82c7d9449/Figure_2-3.zip?dl=1',
-              'https://data.mendeley.com/datasets/v58yj49pfr/1/files/75c2eea3-0bca-4c7d-a06a-c0a75ebebcd2/Figure_4.zip?dl=1',
-              'https://data.mendeley.com/datasets/v58yj49pfr/1/files/859158e7-2786-481e-b070-99aab43aba36/Figure_S3.zip?dl=1',
-              'https://data.mendeley.com/datasets/v58yj49pfr/1/files/0e52746f-545c-4607-91c2-cd8635d4d269/Figure_S5.zip?dl=1')
+urls_data = c('https://data.mendeley.com/public-files/datasets/v58yj49pfr/files/cd2b59f9-b34a-46c3-af33-fe3c43ed7d80/file_downloaded?dl=1',
+              'https://data.mendeley.com/public-files/datasets/v58yj49pfr/files/758f4f06-730e-4046-9b65-4ce74c56f581/file_downloaded?dl=1',
+              'https://data.mendeley.com/public-files/datasets/v58yj49pfr/files/fad34c02-8a26-4291-814a-dc3bd4d980a2/file_downloaded?dl=1',
+              'https://data.mendeley.com/public-files/datasets/v58yj49pfr/files/2eb186ee-7410-4f2e-b42e-1d2d8b8b4931/file_downloaded?dl=1',
+              'https://data.mendeley.com/public-files/datasets/v58yj49pfr/files/b39223d2-2825-4e79-9875-86fa0e1c55d2/file_downloaded?dl=1')
 
 # set working directory to current script location
 scriptdir <- dirname(parent.frame(2)$ofile)
