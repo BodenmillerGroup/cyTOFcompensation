@@ -1,7 +1,6 @@
 channels:
-  - bioconda
-  - defaults
   - conda-forge
+  - bioconda
 dependencies:
   - bioconductor-catalyst=1.6
   - r::r-stringr
@@ -24,3 +23,5 @@ dependencies:
   - r-irkernel
   - libiconv
   - icu<=60
+  - libgfortran
+
