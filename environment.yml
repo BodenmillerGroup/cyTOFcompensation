@@ -24,3 +24,4 @@ dependencies:
   - plotly
   - r-irkernel
   - libiconv
+  - icu=60
