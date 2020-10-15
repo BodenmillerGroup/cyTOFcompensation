@@ -13,16 +13,17 @@ https://docs.conda.io/projects/conda/en/latest/user-guide/install/#
 
 To install the environment use:
 ```
-conda create -f environment environment/cytofcompensation_env.yml
+conda create -f environment.yml
+conda activate cytofcompensation
+```
+on a desktop you should be able to start Rstudio via
+
+```
+rstudio
 ```
 
 This was tested on Ubuntu 18.04.
-Alternatively we provide a dockerfile to generate a container:
-
-```
-environment/Dockerfile
-```
-
+Alternatively we provide a dockerfile to generate a container with the environment.
 
 
 The repository is organized in the following scripts:
