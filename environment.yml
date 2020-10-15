@@ -24,4 +24,4 @@ dependencies:
   - libiconv
   - icu<=60
   - libgfortran
-
+  - r-devtools
