@@ -1,4 +1,3 @@
-name: cytofcompensation
 channels:
   - bioconda
   - r

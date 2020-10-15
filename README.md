@@ -13,7 +13,7 @@ https://docs.conda.io/projects/conda/en/latest/user-guide/install/#
 
 To install the environment use:
 ```
-conda create -f environment.yml
+conda emv create -f environment.yml -n cytofcompensation
 conda activate cytofcompensation
 ```
 on a desktop you should be able to start Rstudio via
