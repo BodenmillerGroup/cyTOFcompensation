@@ -1,3 +1,4 @@
+RStudio: [![Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BodenmillerGroup/cyTOFcompensation/environment?filepath=README.md?urlpath=rstudio)
 # cyTOF compensation
 
 This repository contains scripts used to reproduce a majority of figures from the paper "Compensation of signal spillover in suspension and imaging mass cytometry" by Stéphane Chevrier\*, Helena L. Crowell\*, Vito R.T. Zanotelli\*, Stefanie Engler, Mark D. Robinson, and Bernd Bodenmiller which is published in 'Cell Systems' as "Compensation of Signal Spillover in Suspension and Imaging Mass Cytometry" (http://www.cell.com/cell-systems/abstract/S2405-4712(18)30063-2)
