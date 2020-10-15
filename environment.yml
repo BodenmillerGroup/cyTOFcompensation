@@ -1,6 +1,5 @@
 channels:
   - bioconda
-  - r
   - defaults
   - conda-forge
 dependencies:
@@ -24,4 +23,4 @@ dependencies:
   - plotly
   - r-irkernel
   - libiconv
-  - icu=60
+  - icu<=60
