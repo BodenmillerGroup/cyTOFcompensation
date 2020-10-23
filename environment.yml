@@ -2,7 +2,7 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - bioconductor-catalyst=1.6
+  - bioconductor-catalyst=1.10
   - r::r-stringr
   - r-ggpmisc
   - r-data.table
