@@ -219,7 +219,7 @@ comp_datimg <- function(datimg, sm, method='nnls',...){
   
   img_comp = img_mat %>%
     flowCore::flowFrame() %>%
-    CATALYST::compCytof(sm,method=method, ...) %>%
+    CATALYST::compCytof(as.matrix(sm),method=method, ...) %>%
     flowCore::exprs() %>%
     as.data.table()
   setnames(img_comp, orig_names)
