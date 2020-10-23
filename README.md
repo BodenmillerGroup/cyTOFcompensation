@@ -9,8 +9,12 @@ The raw data is available from Mendeley data under the DOI code 10.17632/v58yj49
 The CATALYST package developed specifically to allow a user friendly usage of the developped spillover estimation and compensation approach can be found for download at: http://bioconductor.org/packages/CATALYST
 A link to the light version of the web app, installation instructions, example datasets, and vignettes for CATALYST are available from the project page: https://catalyst-project.github.io/. 
 
-Due to changes in CATALYST, this repository only works with older versions. To generate a compatible enviornment, we suggest you to use conda:
-https://docs.conda.io/projects/conda/en/latest/user-guide/install/#
+
+## Scripts in this repository only works for CATALYST 1.6
+
+Due to changes in CATALYST, this repository only works with older versions (tested: CATALYST 1.6).
+To generate a compatible enviornment, we suggest you to use conda:
+https://docs.conda.io/projects/conda/en/latest/user-guide/install
 
 To install the environment use:
 ```
