@@ -5,7 +5,7 @@
 This code repository has been mainly done to provide code to reproduce our analyses from the paper.  
 If you are looking for actual code examples how to do compensation, please look into:
 - Flow Mass Cytometry: CATALYST https://bioconductor.org/packages/release/bioc/html/CATALYST.html
-- Imaging Mass Cytometry: imcRtools + CATALYST: https://bioconductor.org/packages/devel/bioc/html/imcRtools.html
+- Imaging Mass Cytometry: [imcRtools](https://bioconductor.org/packages/imcRtools) + CATALYST: https://bodenmillergroup.github.io/IMCDataAnalysis/spillover-correction.html
 
 
 ## Background
