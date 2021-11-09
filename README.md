@@ -1,6 +1,16 @@
 # cyTOF compensation
 
+## Preface
+
+This code repository has been mainly done to provide code to reproduce our analyses from the paper.  
+If you are looking for actual code examples how to do compensation, please look into:
+- Flow Mass Cytometry: CATALYST https://bioconductor.org/packages/release/bioc/html/CATALYST.html
+- Imaging Mass Cytometry: imcRtools + CATALYST: https://bioconductor.org/packages/devel/bioc/html/imcRtools.html
+
+
+## Background
 This repository contains scripts used to reproduce a majority of figures from the paper "Compensation of signal spillover in suspension and imaging mass cytometry" by Stéphane Chevrier\*, Helena L. Crowell\*, Vito R.T. Zanotelli\*, Stefanie Engler, Mark D. Robinson, and Bernd Bodenmiller which is published in 'Cell Systems' as "Compensation of Signal Spillover in Suspension and Imaging Mass Cytometry" (http://www.cell.com/cell-systems/abstract/S2405-4712(18)30063-2)
+
 
 The bioRxiv version was made available under the name "Channel crosstalk correction in suspension and imaging mass cytometry": https://www.biorxiv.org/content/early/2017/09/07/185744
 
